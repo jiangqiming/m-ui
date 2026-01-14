@@ -8,7 +8,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '组件', link: '/components/button' },
-      { text: 'GitHub', link: 'https://github.com' }
+      { text: 'GitHub', link: 'https://github.com/jiangqiming/m-ui' }
     ],
     sidebar: {
       '/components/': [
@@ -22,7 +22,7 @@ export default defineConfig({
       ]
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com' }
+      { icon: 'github', link: 'https://github.com/jiangqiming/m-ui' }
     ]
   }
 })
