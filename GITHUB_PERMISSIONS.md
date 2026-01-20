@@ -45,10 +45,10 @@
 
 ## 当前仓库状态
 
-你的仓库：`https://github.com/jiangqiming/m-ui`
+你的仓库：`https://github.com/jqkgg/m-ui`
 
 **当前权限：**
-- 只有你（jiangqiming）可以直接推送
+- 只有你（jqkgg）可以直接推送
 - 其他人需要通过 Fork + Pull Request 贡献代码
 
 **建议设置：**

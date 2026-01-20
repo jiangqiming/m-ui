@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 
@@ -56,7 +56,7 @@ import { MButton } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 
@@ -80,7 +80,7 @@ import { MButton } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 
@@ -110,7 +110,7 @@ Button 组件提供除了默认值以外的三种尺寸，可以在不同场景�
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 
@@ -134,7 +134,7 @@ import { MButton } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 
@@ -158,7 +158,7 @@ import { MButton } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 
@@ -184,7 +184,7 @@ import { MButton } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 </script>
 ```
 

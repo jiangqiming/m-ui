@@ -56,7 +56,7 @@ npm profile enable-2fa auth-and-writes
 如果上述方法都不行，你可以创建一个 npm Access Token 用于发布：
 
 1. **在 npm 网站上**：
-   - 访问：https://www.npmjs.com/settings/jiangqiming/tokens
+   - 访问：https://www.npmjs.com/settings/jqkgg/tokens
    - 点击 "Generate New Token"
    - 选择类型：**"Automation"** 或 **"Publish"**
    - 命名：例如 "m-ui-publish"

@@ -14,19 +14,19 @@
 ## 安装
 
 ```bash
-npm install @jiangqiming/m-ui
+npm install @jqkgg/m-ui
 ```
 
 ## 快速开始
 
-📖 [使用文档](https://jiangqiming.github.io/m-ui/)
+📖 [使用文档](https://jqkgg.github.io/m-ui/)
 
 ### 完整引入
 
 ```javascript
 import { createApp } from 'vue'
-import MUI from '@jiangqiming/m-ui'
-import '@jiangqiming/m-ui/style.css'
+import MUI from '@jqkgg/m-ui'
+import '@jqkgg/m-ui/style.css'
 
 const app = createApp(App)
 app.use(MUI)
@@ -36,8 +36,8 @@ app.mount('#app')
 ### 按需引入
 
 ```javascript
-import { MButton, MInput, MChartBar } from '@jiangqiming/m-ui'
-import '@jiangqiming/m-ui/style.css'
+import { MButton, MInput, MChartBar } from '@jqkgg/m-ui'
+import '@jqkgg/m-ui/style.css'
 ```
 
 ### 依赖安装
@@ -62,7 +62,7 @@ npm install echarts@^5.0.0
 </template>
 
 <script setup>
-import { MButton } from '@jiangqiming/m-ui'
+import { MButton } from '@jqkgg/m-ui'
 
 const handleClick = () => {
   console.log('按钮被点击')
@@ -79,7 +79,7 @@ const handleClick = () => {
 
 <script setup>
 import { ref } from 'vue'
-import { MInput } from '@jiangqiming/m-ui'
+import { MInput } from '@jqkgg/m-ui'
 
 const value = ref('')
 </script>
@@ -98,7 +98,7 @@ const value = ref('')
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 

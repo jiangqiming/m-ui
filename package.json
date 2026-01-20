@@ -1,6 +1,6 @@
 {
-  "name": "@jiangqiming/m-ui",
-  "version": "1.0.1",
+  "name": "@jqkgg/m-ui",
+  "version": "1.0.2",
   "description": "一个基于 Vue3 的组件库",
   "type": "module",
   "main": "./dist/m-ui.umd.cjs",
@@ -33,15 +33,15 @@
     "ui",
     "typescript"
   ],
-  "author": "jiangqiming",
+  "author": "jqkgg",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jiangqiming/m-ui.git"
+    "url": "https://github.com/jqkgg/m-ui.git"
   },
-  "homepage": "https://github.com/jiangqiming/m-ui#readme",
+  "homepage": "https://github.com/jqkgg/m-ui#readme",
   "bugs": {
-    "url": "https://github.com/jiangqiming/m-ui/issues"
+    "url": "https://github.com/jqkgg/m-ui/issues"
   },
   "peerDependencies": {
     "echarts": "^5.0.0",

@@ -17,7 +17,7 @@ export default defineConfig({
     ],
     resolve: {
       alias: {
-        '@jiangqiming/m-ui': resolve(__dirname, '../../src/index.ts')
+        '@jqkgg/m-ui': resolve(__dirname, '../../src/index.ts')
       }
     },
     optimizeDeps: {
@@ -31,7 +31,7 @@ export default defineConfig({
     nav: [
       { text: '首页', link: '/' },
       { text: '组件', link: '/components/button' },
-      { text: 'GitHub', link: 'https://github.com/jiangqiming/m-ui' }
+      { text: 'GitHub', link: 'https://github.com/jqkgg/m-ui' }
     ],
     sidebar: {
       '/components/': [
@@ -46,7 +46,7 @@ export default defineConfig({
       ]
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/jiangqiming/m-ui' }
+      { icon: 'github', link: 'https://github.com/jqkgg/m-ui' }
     ]
   }
 })

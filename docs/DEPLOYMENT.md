@@ -34,7 +34,7 @@ npm run preview:docs
 
 **首次使用需要配置：**
 
-1. 进入 GitHub 仓库：https://github.com/jiangqiming/m-ui
+1. 进入 GitHub 仓库：https://github.com/jqkgg/m-ui
 2. 点击 **Settings** → **Pages**
 3. 在 **Source** 部分，选择 **GitHub Actions**
 4. 保存设置
@@ -44,7 +44,7 @@ npm run preview:docs
 - 构建文档
 - 部署到 GitHub Pages
 
-文档地址：https://jiangqiming.github.io/m-ui/
+文档地址：https://jqkgg.github.io/m-ui/
 
 ### 方法 2：手动部署
 
@@ -69,7 +69,7 @@ git commit -m 'deploy docs'
 
 4. 推送到 GitHub Pages：
 ```bash
-git push -f git@github.com:jiangqiming/m-ui.git main:gh-pages
+git push -f git@github.com:jqkgg/m-ui.git main:gh-pages
 ```
 
 或者使用 GitHub CLI：

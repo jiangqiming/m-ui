@@ -1,6 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
-import { MButton, MInput, MChartBar } from '@jiangqiming/m-ui'
+import { MButton, MInput, MChartBar } from '@jqkgg/m-ui'
 import Demo from '../components/Demo.vue'
 import CodeBlock from '../components/CodeBlock.vue'
 import '../../../src/style.css'

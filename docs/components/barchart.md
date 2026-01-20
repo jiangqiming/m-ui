@@ -84,7 +84,7 @@ const scrollCategories = ref([
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -116,7 +116,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -152,7 +152,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -191,7 +191,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -223,7 +223,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -257,7 +257,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -295,7 +295,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>
@@ -338,7 +338,7 @@ import { MChartBar } from '@jiangqiming/m-ui'
 </template>
 
 <script setup>
-import { MChartBar } from '@jiangqiming/m-ui'
+import { MChartBar } from '@jqkgg/m-ui'
 </script>
 ```
 </CodeBlock>

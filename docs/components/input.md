@@ -32,7 +32,7 @@ const email = ref('')
 
 <script setup>
 import { ref } from 'vue'
-import { MInput } from '@jiangqiming/m-ui'
+import { MInput } from '@jqkgg/m-ui'
 
 const input = ref('')
 </script>
@@ -57,7 +57,7 @@ const input = ref('')
 
 <script setup>
 import { ref } from 'vue'
-import { MInput } from '@jiangqiming/m-ui'
+import { MInput } from '@jqkgg/m-ui'
 
 const input = ref('')
 </script>
@@ -82,7 +82,7 @@ const input = ref('')
 
 <script setup>
 import { ref } from 'vue'
-import { MInput } from '@jiangqiming/m-ui'
+import { MInput } from '@jqkgg/m-ui'
 
 const input = ref('只读输入框')
 </script>
@@ -107,7 +107,7 @@ const input = ref('只读输入框')
 
 <script setup>
 import { ref } from 'vue'
-import { MInput } from '@jiangqiming/m-ui'
+import { MInput } from '@jqkgg/m-ui'
 
 const input = ref('')
 </script>
@@ -138,7 +138,7 @@ const input = ref('')
 
 <script setup>
 import { ref } from 'vue'
-import { MInput } from '@jiangqiming/m-ui'
+import { MInput } from '@jqkgg/m-ui'
 
 const text = ref('')
 const password = ref('')

@@ -13,7 +13,7 @@
 ## 安装
 
 ```bash
-npm install @jiangqiming/m-ui
+npm install @jqkgg/m-ui
 ```
 
 ## 快速开始
@@ -22,8 +22,8 @@ npm install @jiangqiming/m-ui
 
 ```javascript
 import { createApp } from 'vue'
-import MUI from '@jiangqiming/m-ui'
-import '@jiangqiming/m-ui/dist/style.css'
+import MUI from '@jqkgg/m-ui'
+import '@jqkgg/m-ui/dist/style.css'
 
 const app = createApp(App)
 app.use(MUI)
@@ -33,8 +33,8 @@ app.mount('#app')
 ### 按需引入
 
 ```javascript
-import { MButton, MInput } from '@jiangqiming/m-ui'
-import '@jiangqiming/m-ui/dist/style.css'
+import { MButton, MInput } from '@jqkgg/m-ui'
+import '@jqkgg/m-ui/dist/style.css'
 ```
 
 ## 使用示例
@@ -49,7 +49,7 @@ import '@jiangqiming/m-ui/dist/style.css'
 
 <script setup>
 import { ref } from 'vue'
-import { MButton, MInput } from '@jiangqiming/m-ui'
+import { MButton, MInput } from '@jqkgg/m-ui'
 
 const value = ref('')
 </script>
