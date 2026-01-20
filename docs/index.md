@@ -23,7 +23,7 @@ npm install @jqkgg/m-ui
 ```javascript
 import { createApp } from 'vue'
 import MUI from '@jqkgg/m-ui'
-import '@jqkgg/m-ui/dist/style.css'
+import '@jqkgg/m-ui/style.css'
 
 const app = createApp(App)
 app.use(MUI)
@@ -34,7 +34,7 @@ app.mount('#app')
 
 ```javascript
 import { MButton, MInput } from '@jqkgg/m-ui'
-import '@jqkgg/m-ui/dist/style.css'
+import '@jqkgg/m-ui/style.css'
 ```
 
 ## 使用示例
