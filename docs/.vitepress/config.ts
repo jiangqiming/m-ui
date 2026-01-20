@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { resolve } from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
   title: 'M-UI',
@@ -7,10 +8,23 @@ export default defineConfig({
   base: '/m-ui/',
   ignoreDeadLinks: true,
   vite: {
+    plugins: [
+      AutoImport({
+        imports: ['vue'],
+        dts: false,
+        vueTemplate: true
+      })
+    ],
     resolve: {
       alias: {
         '@jiangqiming/m-ui': resolve(__dirname, '../../src/index.ts')
       }
+    },
+    optimizeDeps: {
+      include: ['echarts']
+    },
+    ssr: {
+      noExternal: ['echarts']
     }
   },
   themeConfig: {
@@ -25,7 +39,8 @@ export default defineConfig({
           text: '基础组件',
           items: [
             { text: 'Button 按钮', link: '/components/button' },
-            { text: 'Input 输入框', link: '/components/input' }
+            { text: 'Input 输入框', link: '/components/input' },
+            { text: 'ChartBar 柱状图', link: '/components/barchart' }
           ]
         }
       ]

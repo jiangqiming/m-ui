@@ -4,16 +4,18 @@ import './style.scss'
 // 导入组件
 import MButton from './components/Button/index.vue'
 import MInput from './components/Input/index.vue'
+import MChartBar from './components/ChartBar/index.vue'
 
 // 导出组件
-export { MButton, MInput }
+export { MButton, MInput, MChartBar }
 
 // 导出类型
 export type { ButtonProps } from './components/Button/types'
 export type { InputProps } from './components/Input/types'
+export type { ChartBarProps, ChartBarSeries, ChartBarDirection } from './components/ChartBar/types'
 
 // 组件列表
-const components = [MButton, MInput]
+const components = [MButton, MInput, MChartBar]
 
 // 安装函数
 const install = (app: App) => {
@@ -27,6 +29,7 @@ const install = (app: App) => {
 export default {
   install,
   MButton,
-  MInput
+  MInput,
+  MChartBar
 }
 

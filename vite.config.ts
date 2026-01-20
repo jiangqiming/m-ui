@@ -1,9 +1,25 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    AutoImport({
+      imports: [
+        'vue',
+        {
+          vue: ['defineOptions', 'defineProps', 'defineEmits', 'defineExpose', 'withDefaults', 'defineModel']
+        }
+      ],
+      dts: true,
+      vueTemplate: true,
+      eslintrc: {
+        enabled: false
+      }
+    })
+  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
