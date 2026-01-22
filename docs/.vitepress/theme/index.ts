@@ -1,6 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
-import { MButton, MInput, MChartBar, MChartPie, MResponsivePage } from '@jqkgg/m-ui'
+import { MButton, MInput, MChartBar, MChartPie, MResponsivePage, MScrollBox } from '@jqkgg/m-ui'
 import Demo from '../components/Demo.vue'
 import CodeBlock from '../components/CodeBlock.vue'
 import '../../../src/style.css'
@@ -15,6 +15,7 @@ export default {
     app.component('MChartBar', MChartBar)
     app.component('MChartPie', MChartPie)
     app.component('MResponsivePage', MResponsivePage)
+    app.component('MScrollBox', MScrollBox)
     app.component('Demo', Demo)
     app.component('CodeBlock', CodeBlock)
   }

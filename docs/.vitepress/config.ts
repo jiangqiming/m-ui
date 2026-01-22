@@ -38,7 +38,8 @@ export default defineConfig({
         {
           text: '布局组件',
           items: [
-            { text: 'ResponsivePage 响应式页面', link: '/components/responsivepage' }
+            { text: 'ResponsivePage 响应式页面', link: '/components/responsivepage' },
+            { text: 'ScrollBox 滚动容器', link: '/components/scrollbox' }
           ]
         },
         {
