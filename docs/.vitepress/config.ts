@@ -30,23 +30,17 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '首页', link: '/' },
-      { text: '组件', link: '/components/button' },
+      { text: '组件', link: '/components/responsivepage' },
       { text: 'GitHub', link: 'https://github.com/jqkgg/m-ui' }
     ],
     sidebar: {
       '/components/': [
         {
-          text: '布局组件',
+          text: '容器组件',
           items: [
             { text: 'ResponsivePage 响应式页面', link: '/components/responsivepage' },
-            { text: 'ScrollBox 滚动容器', link: '/components/scrollbox' }
-          ]
-        },
-        {
-          text: '容器',
-          items: [
-            { text: 'Button 按钮', link: '/components/button' },
-            { text: 'Input 输入框', link: '/components/input' },
+            { text: 'ScrollBox 滚动容器', link: '/components/scrollbox' },
+            { text: 'EllipsisText 文本省略', link: '/components/ellipsistext' },
           ]
         },
         {
