@@ -47,7 +47,8 @@ export default defineConfig({
           text: '图表组件',
           items: [
             { text: 'ChartBar 柱状图', link: '/components/barchart' },
-            { text: 'ChartPie 饼图', link: '/components/piechart' }
+            { text: 'ChartBar3D 3D柱状图', link: '/components/bar3dchart' },
+            { text: 'ChartPie 饼图', link: '/components/piechart' },
           ]
         }
       ]
