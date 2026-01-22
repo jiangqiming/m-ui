@@ -21,10 +21,10 @@ export default defineConfig({
       }
     },
     optimizeDeps: {
-      include: ['echarts']
+      include: ['echarts', 'element-plus']
     },
     ssr: {
-      noExternal: ['echarts']
+      noExternal: ['echarts', 'element-plus']
     }
   },
   themeConfig: {

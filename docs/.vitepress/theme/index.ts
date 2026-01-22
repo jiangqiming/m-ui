@@ -3,12 +3,16 @@ import type { Theme } from 'vitepress'
 import { MButton, MInput, MChartBar, MChartPie, MResponsivePage, MScrollBox, MEllipsisText } from '@jqkgg/m-ui'
 import Demo from '../components/Demo.vue'
 import CodeBlock from '../components/CodeBlock.vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import '../../../src/style.css'
 import './custom.css'
 
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
+    // 注册 Element Plus
+    app.use(ElementPlus)
     // 注册组件
     app.component('MButton', MButton)
     app.component('MInput', MInput)

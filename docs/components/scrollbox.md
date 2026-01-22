@@ -85,7 +85,7 @@ import { MScrollBox } from '@jqkgg/m-ui'
   </div>
   <div style="margin-top: 16px;">
     <label>
-      滚动速度: <input type="range" v-model="scrollSpeed" min="10" max="200" step="10" style="margin-left: 8px;" />
+      滚动速度: <el-slider v-model="scrollSpeed" :min="10" :max="200" :step="10" style="width: 200px; margin-left: 8px; display: inline-block;" />
       <span style="margin-left: 8px;">{{ scrollSpeed }} 像素/秒</span>
     </label>
   </div>
@@ -106,7 +106,7 @@ import { MScrollBox } from '@jqkgg/m-ui'
     </MScrollBox>
     <div style="margin-top: 16px;">
       <label>
-        滚动速度: <input type="range" v-model="scrollSpeed" min="10" max="200" step="10" style="margin-left: 8px;" />
+        滚动速度: <el-slider v-model="scrollSpeed" :min="10" :max="200" :step="10" style="width: 200px; margin-left: 8px; display: inline-block;" />
         <span style="margin-left: 8px;">{{ scrollSpeed }} 像素/秒</span>
       </label>
     </div>
@@ -145,9 +145,7 @@ const scrollSpeed = ref(50)
     </MScrollBox>
   </div>
   <div style="margin-top: 16px;">
-    <label>
-      <input type="checkbox" v-model="disabled" /> 禁用滚动
-    </label>
+    <el-checkbox v-model="disabled">禁用滚动</el-checkbox>
   </div>
 </Demo>
 
@@ -164,9 +162,7 @@ const scrollSpeed = ref(50)
       </div>
     </MScrollBox>
     <div style="margin-top: 16px;">
-      <label>
-        <input type="checkbox" v-model="disabled" /> 禁用滚动
-      </label>
+      <el-checkbox v-model="disabled">禁用滚动</el-checkbox>
     </div>
   </div>
 </template>
@@ -206,10 +202,10 @@ const disabled = ref(false)
   <div style="margin-top: 16px;">
     <label>
       滚动方向: 
-      <select v-model="direction" style="margin-left: 8px;">
-        <option value="up">向上</option>
-        <option value="down">向下</option>
-      </select>
+      <el-select v-model="direction" style="width: 120px; margin-left: 8px;">
+        <el-option label="向上" value="up" />
+        <el-option label="向下" value="down" />
+      </el-select>
     </label>
   </div>
 </Demo>
@@ -230,10 +226,10 @@ const disabled = ref(false)
     <div style="margin-top: 16px;">
       <label>
         滚动方向: 
-        <select v-model="direction" style="margin-left: 8px;">
-          <option value="up">向上</option>
-          <option value="down">向下</option>
-        </select>
+        <el-select v-model="direction" style="width: 120px; margin-left: 8px;">
+          <el-option label="向上" value="up" />
+          <el-option label="向下" value="down" />
+        </el-select>
       </label>
     </div>
   </div>
@@ -272,9 +268,7 @@ const direction = ref('up')
     </MScrollBox>
   </div>
   <div style="margin-top: 16px;">
-    <label>
-      <input type="checkbox" v-model="loop" /> 循环滚动
-    </label>
+    <el-checkbox v-model="loop">循环滚动</el-checkbox>
   </div>
 </Demo>
 
@@ -292,9 +286,7 @@ const direction = ref('up')
       </div>
     </MScrollBox>
     <div style="margin-top: 16px;">
-      <label>
-        <input type="checkbox" v-model="loop" /> 循环滚动
-      </label>
+      <el-checkbox v-model="loop">循环滚动</el-checkbox>
     </div>
   </div>
 </template>
@@ -333,7 +325,7 @@ const loop = ref(true)
   </div>
   <div style="margin-top: 16px;">
     <label>
-      容器高度: <input type="text" v-model="height" style="width: 100px; margin-left: 8px;" />
+      容器高度: <el-input v-model="height" style="width: 100px; margin-left: 8px;" />
     </label>
   </div>
 </Demo>
@@ -353,7 +345,7 @@ const loop = ref(true)
     </MScrollBox>
     <div style="margin-top: 16px;">
       <label>
-        容器高度: <input type="text" v-model="height" style="width: 100px; margin-left: 8px;" />
+        容器高度: <el-input v-model="height" style="width: 100px; margin-left: 8px;" />
       </label>
     </div>
   </div>

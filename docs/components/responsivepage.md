@@ -56,9 +56,7 @@ import { MResponsivePage } from '@jqkgg/m-ui'
       <div style="padding: 20px;">
         <h3 style="margin: 0 0 16px 0;">全屏模式示例</h3>
         <p>设置 fullscreen 为 true 时，容器会占满整个视口。</p>
-        <label>
-          <input type="checkbox" v-model="fullscreen" /> 启用全屏
-        </label>
+        <el-checkbox v-model="fullscreen">启用全屏</el-checkbox>
       </div>
     </MResponsivePage>
   </div>
@@ -73,9 +71,7 @@ import { MResponsivePage } from '@jqkgg/m-ui'
       <div style="padding: 20px;">
         <h3 style="margin: 0 0 16px 0;">全屏模式示例</h3>
         <p>设置 fullscreen 为 true 时，容器会占满整个视口。</p>
-        <label>
-          <input type="checkbox" v-model="fullscreen" /> 启用全屏
-        </label>
+        <el-checkbox v-model="fullscreen">启用全屏</el-checkbox>
       </div>
     </MResponsivePage>
   </div>
@@ -150,17 +146,15 @@ import { MResponsivePage } from '@jqkgg/m-ui'
     </MResponsivePage>
   </div>
   <div style="margin-top: 16px;">
-    <label>
-      <input type="checkbox" v-model="enableScale" /> 启用缩放
-    </label>
+    <el-checkbox v-model="enableScale">启用缩放</el-checkbox>
     <label style="margin-left: 16px;">
       缩放模式: 
-      <select v-model="scaleMode" style="margin-left: 8px;">
-        <option value="fit">fit（适配）</option>
-        <option value="width">width（按宽度）</option>
-        <option value="height">height（按高度）</option>
-        <option value="both">both（同时）</option>
-      </select>
+      <el-select v-model="scaleMode" style="width: 150px; margin-left: 8px;">
+        <el-option label="fit（适配）" value="fit" />
+        <el-option label="width（按宽度）" value="width" />
+        <el-option label="height（按高度）" value="height" />
+        <el-option label="both（同时）" value="both" />
+      </el-select>
     </label>
   </div>
 </Demo>
@@ -186,17 +180,15 @@ import { MResponsivePage } from '@jqkgg/m-ui'
       </MResponsivePage>
     </div>
     <div style="margin-top: 16px;">
-      <label>
-        <input type="checkbox" v-model="enableScale" /> 启用缩放
-      </label>
+      <el-checkbox v-model="enableScale">启用缩放</el-checkbox>
       <label style="margin-left: 16px;">
         缩放模式: 
-        <select v-model="scaleMode" style="margin-left: 8px;">
-          <option value="fit">fit（适配）</option>
-          <option value="width">width（按宽度）</option>
-          <option value="height">height（按高度）</option>
-          <option value="both">both（同时）</option>
-        </select>
+        <el-select v-model="scaleMode" style="width: 150px; margin-left: 8px;">
+          <el-option label="fit（适配）" value="fit" />
+          <el-option label="width（按宽度）" value="width" />
+          <el-option label="height（按高度）" value="height" />
+          <el-option label="both（同时）" value="both" />
+        </el-select>
       </label>
     </div>
   </div>
@@ -229,10 +221,10 @@ const backgroundColor = ref('#f5f5f5')
   </div>
   <div style="margin-top: 16px;">
     <label>
-      背景色: <input type="color" v-model="backgroundColor" style="margin-left: 8px;" />
+      背景色: <el-color-picker v-model="backgroundColor" style="margin-left: 8px;" />
     </label>
     <label style="margin-left: 16px;">
-      内边距: <input type="text" v-model="padding" style="width: 80px; margin-left: 8px;" />
+      内边距: <el-input v-model="padding" style="width: 80px; margin-left: 8px;" />
     </label>
   </div>
 </Demo>
@@ -253,10 +245,10 @@ const backgroundColor = ref('#f5f5f5')
     </div>
     <div style="margin-top: 16px;">
       <label>
-        背景色: <input type="color" v-model="backgroundColor" style="margin-left: 8px;" />
+        背景色: <el-color-picker v-model="backgroundColor" style="margin-left: 8px;" />
       </label>
       <label style="margin-left: 16px;">
-        内边距: <input type="text" v-model="padding" style="width: 80px; margin-left: 8px;" />
+        内边距: <el-input v-model="padding" style="width: 80px; margin-left: 8px;" />
       </label>
     </div>
   </div>

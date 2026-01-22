@@ -137,18 +137,12 @@ import { MChartPie } from '@jqkgg/m-ui'
     />
   </div>
   <div style="margin-top: 16px;">
-    <label>
-      <input type="radio" value="left" v-model="legendPosition" /> 左侧
-    </label>
-    <label style="margin-left: 16px;">
-      <input type="radio" value="right" v-model="legendPosition" /> 右侧
-    </label>
-    <label style="margin-left: 16px;">
-      <input type="radio" value="top" v-model="legendPosition" /> 顶部
-    </label>
-    <label style="margin-left: 16px;">
-      <input type="radio" value="bottom" v-model="legendPosition" /> 底部
-    </label>
+    <el-radio-group v-model="legendPosition">
+      <el-radio label="left">左侧</el-radio>
+      <el-radio label="right">右侧</el-radio>
+      <el-radio label="top">顶部</el-radio>
+      <el-radio label="bottom">底部</el-radio>
+    </el-radio-group>
   </div>
 </Demo>
 
@@ -164,18 +158,12 @@ import { MChartPie } from '@jqkgg/m-ui'
       />
     </div>
     <div style="margin-top: 16px;">
-      <label>
-        <input type="radio" value="left" v-model="legendPosition" /> 左侧
-      </label>
-      <label style="margin-left: 16px;">
-        <input type="radio" value="right" v-model="legendPosition" /> 右侧
-      </label>
-      <label style="margin-left: 16px;">
-        <input type="radio" value="top" v-model="legendPosition" /> 顶部
-      </label>
-      <label style="margin-left: 16px;">
-        <input type="radio" value="bottom" v-model="legendPosition" /> 底部
-      </label>
+      <el-radio-group v-model="legendPosition">
+        <el-radio label="left">左侧</el-radio>
+        <el-radio label="right">右侧</el-radio>
+        <el-radio label="top">顶部</el-radio>
+        <el-radio label="bottom">底部</el-radio>
+      </el-radio-group>
     </div>
   </div>
 </template>
@@ -280,9 +268,7 @@ import { MChartPie } from '@jqkgg/m-ui'
     />
   </div>
   <div style="margin-top: 16px;">
-    <label>
-      <input type="checkbox" v-model="showLegend" /> 显示图例
-    </label>
+    <el-checkbox v-model="showLegend">显示图例</el-checkbox>
   </div>
 </Demo>
 
@@ -298,9 +284,7 @@ import { MChartPie } from '@jqkgg/m-ui'
       />
     </div>
     <div style="margin-top: 16px;">
-      <label>
-        <input type="checkbox" v-model="showLegend" /> 显示图例
-      </label>
+      <el-checkbox v-model="showLegend">显示图例</el-checkbox>
     </div>
   </div>
 </template>
@@ -334,15 +318,9 @@ const showLegend = ref(true)
     />
   </div>
   <div style="margin-top: 16px;">
-    <label>
-      <input type="checkbox" v-model="showLabel" /> 显示标签
-    </label>
-    <label style="margin-left: 16px;">
-      <input type="checkbox" v-model="showPercent" /> 显示百分比
-    </label>
-    <label style="margin-left: 16px;">
-      <input type="checkbox" v-model="showValue" /> 显示数值
-    </label>
+    <el-checkbox v-model="showLabel">显示标签</el-checkbox>
+    <el-checkbox v-model="showPercent" style="margin-left: 16px;">显示百分比</el-checkbox>
+    <el-checkbox v-model="showValue" style="margin-left: 16px;">显示数值</el-checkbox>
   </div>
 </Demo>
 
@@ -361,15 +339,9 @@ const showLegend = ref(true)
       />
     </div>
     <div style="margin-top: 16px;">
-      <label>
-        <input type="checkbox" v-model="showLabel" /> 显示标签
-      </label>
-      <label style="margin-left: 16px;">
-        <input type="checkbox" v-model="showPercent" /> 显示百分比
-      </label>
-      <label style="margin-left: 16px;">
-        <input type="checkbox" v-model="showValue" /> 显示数值
-      </label>
+      <el-checkbox v-model="showLabel">显示标签</el-checkbox>
+      <el-checkbox v-model="showPercent" style="margin-left: 16px;">显示百分比</el-checkbox>
+      <el-checkbox v-model="showValue" style="margin-left: 16px;">显示数值</el-checkbox>
     </div>
   </div>
 </template>
@@ -405,7 +377,7 @@ const showValue = ref(false)
   </div>
   <div style="margin-top: 16px;">
     <label>
-      内半径: <input type="text" v-model="innerRadius" style="width: 80px;" />
+      内半径: <el-input v-model="innerRadius" style="width: 80px;" />
     </label>
   </div>
 </Demo>
@@ -425,7 +397,7 @@ const showValue = ref(false)
     </div>
     <div style="margin-top: 16px;">
       <label>
-        内半径: <input type="text" v-model="innerRadius" style="width: 80px;" />
+        内半径: <el-input v-model="innerRadius" style="width: 80px;" />
       </label>
     </div>
   </div>

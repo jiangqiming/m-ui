@@ -49,7 +49,7 @@ import { MEllipsisText } from '@jqkgg/m-ui'
     <MEllipsisText :content="content1" :max-width="maxWidth" :disable-tooltip="disableTooltip" />
   </div>
   <div style="margin-top: 12px;">
-    <label><input type="checkbox" v-model="disableTooltip" /> 禁用悬浮提示</label>
+    <el-checkbox v-model="disableTooltip">禁用悬浮提示</el-checkbox>
   </div>
 </Demo>
 
@@ -60,7 +60,7 @@ import { MEllipsisText } from '@jqkgg/m-ui'
   <div>
     <MEllipsisText :content="content" :max-width="maxWidth" :disable-tooltip="disableTooltip" />
     <div style="margin-top: 12px;">
-      <label><input type="checkbox" v-model="disableTooltip" /> 禁用悬浮提示</label>
+      <el-checkbox v-model="disableTooltip">禁用悬浮提示</el-checkbox>
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ const disableTooltip = ref(false)
   </div>
   <div style="margin-top: 12px;">
     <label>行数：</label>
-    <input type="number" v-model.number="lineClamp" min="1" max="5" style="width: 60px;" />
+    <el-input-number v-model="lineClamp" :min="1" :max="5" style="width: 120px;" />
   </div>
 </Demo>
 
@@ -98,7 +98,7 @@ const disableTooltip = ref(false)
     <MEllipsisText :content="content" :line-clamp="lineClamp" max-width="300px" />
     <div style="margin-top: 12px;">
       <label>行数：</label>
-      <input type="number" v-model.number="lineClamp" min="1" max="5" style="width: 60px;" />
+      <el-input-number v-model="lineClamp" :min="1" :max="5" style="width: 120px;" />
     </div>
   </div>
 </template>
@@ -149,7 +149,7 @@ import { MEllipsisText } from '@jqkgg/m-ui'
     <MEllipsisText :content="content1" max-width="200px" :copyable="copyable" />
   </div>
   <div style="margin-top: 12px;">
-    <label><input type="checkbox" v-model="copyable" /> 可复制</label>
+    <el-checkbox v-model="copyable">可复制</el-checkbox>
   </div>
 </Demo>
 
@@ -160,7 +160,7 @@ import { MEllipsisText } from '@jqkgg/m-ui'
   <div>
     <MEllipsisText :content="content" max-width="200px" :copyable="copyable" />
     <div style="margin-top: 12px;">
-      <label><input type="checkbox" v-model="copyable" /> 可复制</label>
+      <el-checkbox v-model="copyable">可复制</el-checkbox>
     </div>
   </div>
 </template>
@@ -185,12 +185,12 @@ const copyable = ref(false)
   </div>
   <div style="margin-top: 12px;">
     <label>位置：</label>
-    <select v-model="placement" style="margin-left: 8px;">
-      <option value="top">top</option>
-      <option value="bottom">bottom</option>
-      <option value="left">left</option>
-      <option value="right">right</option>
-    </select>
+    <el-select v-model="placement" style="width: 120px; margin-left: 8px;">
+      <el-option label="top" value="top" />
+      <el-option label="bottom" value="bottom" />
+      <el-option label="left" value="left" />
+      <el-option label="right" value="right" />
+    </el-select>
   </div>
 </Demo>
 
@@ -202,12 +202,12 @@ const copyable = ref(false)
     <MEllipsisText :content="content" max-width="200px" :placement="placement" />
     <div style="margin-top: 12px;">
       <label>位置：</label>
-      <select v-model="placement" style="margin-left: 8px;">
-        <option value="top">top</option>
-        <option value="bottom">bottom</option>
-        <option value="left">left</option>
-        <option value="right">right</option>
-      </select>
+      <el-select v-model="placement" style="width: 120px; margin-left: 8px;">
+        <el-option label="top" value="top" />
+        <el-option label="bottom" value="bottom" />
+        <el-option label="left" value="left" />
+        <el-option label="right" value="right" />
+      </el-select>
     </div>
   </div>
 </template>
@@ -232,7 +232,7 @@ const placement = ref('top')
   </div>
   <div style="margin-top: 12px;">
     <label>maxWidth: </label>
-    <input type="text" v-model="maxWidth" style="width: 100px;" />
+    <el-input v-model="maxWidth" style="width: 100px;" />
   </div>
 </Demo>
 
@@ -244,7 +244,7 @@ const placement = ref('top')
     <MEllipsisText :content="content" :max-width="maxWidth" tag="div" />
     <div style="margin-top: 12px;">
       <label>maxWidth: </label>
-      <input type="text" v-model="maxWidth" style="width: 100px;" />
+      <el-input v-model="maxWidth" style="width: 100px;" />
     </div>
   </div>
 </template>
