@@ -36,11 +36,23 @@ export default defineConfig({
     sidebar: {
       '/components/': [
         {
-          text: '基础组件',
+          text: '布局组件',
+          items: [
+            { text: 'ResponsivePage 响应式页面', link: '/components/responsivepage' }
+          ]
+        },
+        {
+          text: '容器',
           items: [
             { text: 'Button 按钮', link: '/components/button' },
             { text: 'Input 输入框', link: '/components/input' },
-            { text: 'ChartBar 柱状图', link: '/components/barchart' }
+          ]
+        },
+        {
+          text: '图表组件',
+          items: [
+            { text: 'ChartBar 柱状图', link: '/components/barchart' },
+            { text: 'ChartPie 饼图', link: '/components/piechart' }
           ]
         }
       ]

@@ -1,6 +1,6 @@
 {
   "name": "@jqkgg/m-ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "一个基于 Vue3 的组件库",
   "type": "module",
   "main": "./dist/m-ui.umd.cjs",
@@ -25,7 +25,8 @@
     "dev:docs": "vitepress dev docs",
     "preview:docs": "vitepress preview docs",
     "preview": "vite preview",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm run build && npm publish --access public"
   },
   "keywords": [
     "vue3",
