@@ -3,6 +3,7 @@
     <h1>M-UI 组件库演示</h1>
 
     <section class="demo-section">
+      <h2>ChartMapCq 重庆地图（2D）</h2>
       <MChartMapCq
         :data="[
           { name: '北碚区', value: 55 },
@@ -36,6 +37,44 @@
           { name: '高新区', value: 60 },
         ]"
         :height="450"
+      />
+    </section>
+
+    <section class="demo-section">
+      <h2>ChartMapCq3D 重庆3D地图</h2>
+      <MChartMapCq3D
+        :data="[
+          { name: '北碚区', value: 55 },
+          { name: '渝北区', value: 60 },
+          { name: '江北区', value: 58 },
+          { name: '沙坪坝区', value: 52 },
+          { name: '巴南区', value: 48 },
+          { name: '荣昌区', value: 45 },
+          { name: '大足区', value: 50 },
+          { name: '潼南区', value: 30 },
+          { name: '铜梁区', value: 25 },
+          { name: '江津区', value: 35 },
+          { name: '彭水县', value: 20 },
+          { name: '云阳县', value: 15 },
+          { name: '城口县', value: 5 },
+          { name: '巫溪县', value: 8 },
+          { name: '开州区', value: 3 },
+          { name: '秀山县', value: 2 },
+          { name: '綦江区', value: 4 },
+          { name: '垫江县', value: -5 },
+          { name: '长寿区', value: -8 },
+          { name: '涪陵区', value: -3 },
+          { name: '奉节县', value: -15 },
+          { name: '黔江区', value: -12 },
+          { name: '万州区', value: 40 },
+          { name: '渝中区', value: 58 },
+          { name: '大渡口区', value: 50 },
+          { name: '九龙坡区', value: 52 },
+          { name: '南岸区', value: 48 },
+        ]"
+        :height="500"
+        :height-scale="0.15"
+        legend-position="right"
       />
     </section>
   </div>
