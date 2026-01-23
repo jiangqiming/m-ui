@@ -637,73 +637,8 @@ const buildOption = (): echarts.EChartsOption => {
           show: false,
         },
     legend: legendConfig,
-    geo: [
-      {
-        map: props.mapName,
-        roam: false,
-        zoom: 1,
-        layoutCenter: props.showMainCityInCorner ? ["50%", "50%"] : undefined,
-        layoutSize: props.showMainCityInCorner ? "80%" : "100%",
-        itemStyle: {
-          borderColor: props.areaStyle?.borderColor || "#fff",
-          borderWidth: props.areaStyle?.borderWidth || 1,
-        },
-        emphasis: {
-          itemStyle: {
-            areaColor: props.emphasis?.areaColor || "#ffff00",
-            borderColor: props.emphasis?.borderColor || "#fff",
-            borderWidth: props.emphasis?.borderWidth || 2,
-          },
-        },
-        label: {
-          show: props.showLabel,
-          // 如果显示主城区地图，通过 formatter 隐藏主城区的标签
-          formatter:
-            props.showLabel && props.showMainCityInCorner
-              ? (params: any) => {
-                  const areaName = params.name || "";
-                  // 如果是主城区，返回空字符串隐藏标签
-                  if (props.mainCityNames?.includes(areaName)) {
-                    return "";
-                  }
-                  return areaName;
-                }
-              : undefined,
-          color: props.labelStyle?.color || "#ffffff",
-          fontSize: props.labelStyle?.fontSize || 12,
-          fontWeight: (props.labelStyle?.fontWeight as any) || "normal",
-        },
-      },
-      // 主城区地图（左上角）
-      ...(props.showMainCityInCorner && defaultMainCityGeoJson.value
-        ? [
-            {
-              map: `${props.mapName}-main`,
-              roam: false,
-              zoom: 1,
-              layoutCenter: ["15%", "15%"],
-              layoutSize: "30%",
-              itemStyle: {
-                borderColor: props.areaStyle?.borderColor || "#fff",
-                borderWidth: props.areaStyle?.borderWidth || 1,
-              },
-              emphasis: {
-                itemStyle: {
-                  areaColor: props.emphasis?.areaColor || "#ffff00",
-                  borderColor: props.emphasis?.borderColor || "#fff",
-                  borderWidth: props.emphasis?.borderWidth || 2,
-                },
-              },
-              label: {
-                show: props.showLabel,
-                color: props.labelStyle?.color || "#ffffff",
-                fontSize: (props.labelStyle?.fontSize || 12) * 0.7,
-                fontWeight: (props.labelStyle?.fontWeight as any) || "normal",
-              },
-            },
-          ]
-        : []),
-    ],
+    // 注意：使用 series type: 'map' 时不需要 geo 配置
+    // series 中的 map 类型可以独立控制地图的显示和布局
     series: [
       {
         type: "map" as const,
@@ -711,6 +646,7 @@ const buildOption = (): echarts.EChartsOption => {
         // 不使用 geoIndex，直接使用 map，这样 data 中的 itemStyle 才能生效
         roam: false,
         zoom: 1,
+        // 使用 layoutCenter 和 layoutSize 控制地图布局（与 width/height 冲突，不能同时使用）
         layoutCenter: props.showMainCityInCorner ? ["50%", "50%"] : undefined,
         layoutSize: props.showMainCityInCorner ? "80%" : "100%",
         data: seriesData.filter((item: any) => !item.name.endsWith("_main")),

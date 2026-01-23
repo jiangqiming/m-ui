@@ -1,61 +1,47 @@
 <template>
   <div class="demo-container">
     <h1>M-UI 组件库演示</h1>
-    
+
     <section class="demo-section">
-      <h2>Button 按钮</h2>
-      <div class="flex gap-4 mb-4">
-        <MButton>默认按钮</MButton>
-        <MButton type="primary">主要按钮</MButton>
-        <MButton type="success">成功按钮</MButton>
-        <MButton type="warning">警告按钮</MButton>
-        <MButton type="danger">危险按钮</MButton>
-        <MButton type="info">信息按钮</MButton>
-      </div>
-      
-      <div class="demo-row">
-        <MButton disabled>禁用按钮</MButton>
-        <MButton type="primary" loading>加载中</MButton>
-        <MButton type="primary" plain>朴素按钮</MButton>
-        <MButton type="primary" round>圆角按钮</MButton>
-        <MButton type="primary" circle>圆</MButton>
-      </div>
-      
-      <div class="demo-row">
-        <MButton size="large">大型按钮</MButton>
-        <MButton size="medium">中等按钮</MButton>
-        <MButton size="small">小型按钮</MButton>
-        <MButton size="mini">超小按钮</MButton>
-      </div>
-    </section>
-    
-    <section class="demo-section">
-      <h2>Input 输入框</h2>
-      <div class="demo-row">
-        <MInput v-model="inputValue" placeholder="请输入内容" />
-        <MInput v-model="inputValue2" placeholder="禁用状态" disabled />
-        <MInput v-model="inputValue3" placeholder="只读状态" readonly />
-        <MInput v-model="inputValue4" placeholder="错误状态" error />
-      </div>
-      <div class="demo-row">
-        <MInput v-model="password" type="password" placeholder="密码输入" />
-        <MInput v-model="email" type="email" placeholder="邮箱输入" />
-      </div>
+      <MChartMapCq
+        :data="[
+          { name: '北碚区', value: 55 },
+          { name: '渝北区', value: 60 },
+          { name: '江北区', value: 58 },
+          { name: '沙坪坝区', value: 52 },
+          { name: '巴南区', value: 48 },
+          { name: '荣昌区', value: 45 },
+          { name: '大足区', value: 50 },
+          { name: '潼南区', value: 30 },
+          { name: '铜梁区', value: 25 },
+          { name: '江津区', value: 35 },
+          { name: '彭水县', value: 20 },
+          { name: '云阳县', value: 15 },
+          { name: '城口县', value: 5 },
+          { name: '巫溪县', value: 8 },
+          { name: '开州区', value: 3 },
+          { name: '秀山县', value: 2 },
+          { name: '綦江区', value: 4 },
+          { name: '垫江县', value: -5 },
+          { name: '长寿区', value: -8 },
+          { name: '涪陵区', value: -3 },
+          { name: '奉节县', value: -15 },
+          { name: '黔江区', value: -12 },
+          { name: '万州区', value: 40 },
+          { name: '渝中区', value: 58 },
+          { name: '大渡口区', value: 50 },
+          { name: '江北区', value: 55 },
+          { name: '九龙坡区', value: 52 },
+          { name: '南岸区', value: 48 },
+          { name: '高新区', value: 60 },
+        ]"
+        :height="450"
+      />
     </section>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-import { MButton, MInput } from '../index'
-
-const inputValue = ref('')
-const inputValue2 = ref('')
-const inputValue3 = ref('只读内容')
-const inputValue4 = ref('')
-const password = ref('')
-const email = ref('')
-</script>
+<script setup lang="ts"></script>
 
 <style>
 * {
@@ -65,7 +51,8 @@ const email = ref('')
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, "Helvetica Neue", sans-serif;
   background: #f5f5f5;
 }
 
@@ -107,4 +94,3 @@ body {
   width: 200px;
 }
 </style>
-
