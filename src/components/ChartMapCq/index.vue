@@ -347,10 +347,14 @@ const buildOption = (): echarts.EChartsOption => {
     let color = "#5b9bd5"; // 默认颜色（用于没有数据的区域）
     if (item.color) {
       color = item.color;
-    } else if (item.value !== undefined && item.value !== null && typeof item.value === "number") {
+    } else if (
+      item.value !== undefined &&
+      item.value !== null &&
+      typeof item.value === "number"
+    ) {
       color = getColorByValue(item.value);
     }
-    
+
     // 确保返回的数据格式符合 ECharts map 系列的要求
     return {
       name: item.name,
@@ -553,7 +557,7 @@ const buildOption = (): echarts.EChartsOption => {
           ranges.value.forEach((range: ChartMapCqRange, index: number) => {
             const y = isVertical ? index * (itemHeight + itemGap) + offsetY : offsetY;
             const x = isVertical ? offsetX : index * (itemWidth + itemGap) + offsetX;
-            
+
             // 计算行的中心点，用于垂直居中对齐
             const centerY = y + itemHeight / 2;
             // 颜色块在行中垂直居中
@@ -596,7 +600,7 @@ const buildOption = (): echarts.EChartsOption => {
             type: "group",
             children,
           };
-          
+
           if (left !== undefined) {
             groupConfig.left = typeof left === "string" ? left : `${left}px`;
           }
@@ -641,7 +645,6 @@ const buildOption = (): echarts.EChartsOption => {
         layoutCenter: props.showMainCityInCorner ? ["50%", "50%"] : undefined,
         layoutSize: props.showMainCityInCorner ? "80%" : "100%",
         itemStyle: {
-          // 不设置 areaColor，让 series 层 data 中的 itemStyle.areaColor 生效
           borderColor: props.areaStyle?.borderColor || "#fff",
           borderWidth: props.areaStyle?.borderWidth || 1,
         },
@@ -681,7 +684,6 @@ const buildOption = (): echarts.EChartsOption => {
               layoutCenter: ["15%", "15%"],
               layoutSize: "30%",
               itemStyle: {
-                // 不设置 areaColor，让 series 层 data 中的 itemStyle.areaColor 生效
                 borderColor: props.areaStyle?.borderColor || "#fff",
                 borderWidth: props.areaStyle?.borderWidth || 1,
               },
@@ -712,8 +714,8 @@ const buildOption = (): echarts.EChartsOption => {
         layoutCenter: props.showMainCityInCorner ? ["50%", "50%"] : undefined,
         layoutSize: props.showMainCityInCorner ? "80%" : "100%",
         data: seriesData.filter((item: any) => !item.name.endsWith("_main")),
-        // 只设置边框样式，areaColor 由 data 中的 itemStyle 控制
         itemStyle: {
+          areaColor: props.areaStyle?.areaColor || "#5b9bd5",
           borderColor: props.areaStyle?.borderColor || "#fff",
           borderWidth: props.areaStyle?.borderWidth || 1,
         },
@@ -763,7 +765,7 @@ const buildOption = (): echarts.EChartsOption => {
                   name: item.name.replace("_main", ""),
                 })),
               itemStyle: {
-                // 不设置 areaColor，让 data 中每个数据项的 itemStyle.areaColor 生效
+                areaColor: props.areaStyle?.areaColor || "#5b9bd5",
                 borderColor: props.areaStyle?.borderColor || "#fff",
                 borderWidth: props.areaStyle?.borderWidth || 1,
               },
