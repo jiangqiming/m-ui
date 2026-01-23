@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<ChartMapCqProps>(), {
   mapName: "chongqing",
   showMainCityInCorner: true,
   mainCityNames: () => [
+    "两江新区",
     "渝北区",
     "江北区",
     "北碚区",
@@ -636,7 +637,7 @@ const buildOption = (): echarts.EChartsOption => {
       : {
           show: false,
         },
-    legend: legendConfig,
+    // legend: legendConfig, // 这玩意会让区县中间展示一个小圆点
     // 注意：使用 series type: 'map' 时不需要 geo 配置
     // series 中的 map 类型可以独立控制地图的显示和布局
     series: [
