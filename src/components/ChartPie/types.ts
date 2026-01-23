@@ -36,5 +36,7 @@ export interface ChartPieProps {
   legendShowValue?: boolean
   /** 图例是否显示百分比 */
   legendShowPercent?: boolean
+  /** 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性。参考：https://echarts.apache.org/zh/option.html#series-pie.type */
+  options?: any
 }
 

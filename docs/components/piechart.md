@@ -455,6 +455,89 @@ import { MChartPie } from '@jqkgg/m-ui'
 ```
 </CodeBlock>
 
+## 完全自定义配置
+
+通过 `options` 属性可以完全自定义 ECharts 配置项，传入后将以 `options` 为准，忽略其他属性。这允许你使用 ECharts 的所有功能。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartPie
+      :options="{
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left'
+        },
+        series: [{
+          name: '访问来源',
+          type: 'pie',
+          radius: '50%',
+          data: [
+            { value: 1048, name: '搜索引擎' },
+            { value: 735, name: '直接访问' },
+            { value: 580, name: '邮件营销' },
+            { value: 484, name: '联盟广告' },
+            { value: 300, name: '视频广告' }
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }]
+      }"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartPie
+    :options="{
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      series: [{
+        name: '访问来源',
+        type: 'pie',
+        radius: '50%',
+        data: [
+          { value: 1048, name: '搜索引擎' },
+          { value: 735, name: '直接访问' },
+          { value: 580, name: '邮件营销' },
+          { value: 484, name: '联盟广告' },
+          { value: 300, name: '视频广告' }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }]
+    }"
+  />
+</template>
+
+<script setup>
+import { MChartPie } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+**注意**：使用 `options` 时，需要参考 [ECharts 饼图配置项文档](https://echarts.apache.org/zh/option.html#series-pie.type) 来配置所有选项。
+
 ## API
 
 ### Props
@@ -475,6 +558,7 @@ import { MChartPie } from '@jqkgg/m-ui'
 | showValue | 是否显示数值 | boolean | — | false |
 | legendShowValue | 图例是否显示数值 | boolean | — | true |
 | legendShowPercent | 图例是否显示百分比 | boolean | — | true |
+| options | 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性 | object<br>**注意**：`options` 的类型定义请参考 [ECharts 饼图配置项文档](https://echarts.apache.org/zh/option.html#series-pie.type) | — | undefined |
 
 ### ChartPieDataItem
 

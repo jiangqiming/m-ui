@@ -1,6 +1,29 @@
 import { defineConfig } from 'vitepress'
 import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
+import type { Plugin } from 'vite'
+
+// 插件：在 SSR 环境中定义 self 全局变量
+const ssrSelfPolyfill = (): Plugin => {
+  return {
+    name: 'ssr-self-polyfill',
+    buildStart() {
+      // 在 Node.js 环境中定义 self 全局变量
+      if (typeof global !== 'undefined' && typeof globalThis !== 'undefined') {
+        if (!global.self) {
+          global.self = globalThis
+        }
+      }
+    },
+    config() {
+      return {
+        define: {
+          'self': 'globalThis'
+        }
+      }
+    }
+  }
+}
 
 export default defineConfig({
   title: 'M-UI',
@@ -9,6 +32,7 @@ export default defineConfig({
   ignoreDeadLinks: true,
   vite: {
     plugins: [
+      ssrSelfPolyfill(),
       AutoImport({
         imports: ['vue'],
         dts: false,

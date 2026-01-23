@@ -60,6 +60,11 @@ const computedHeight = computed(() => {
 
 // 构建 ECharts 配置
 const buildOption = (): echarts.EChartsOption => {
+  // 如果传入了 options，直接使用 options
+  if (props.options) {
+    return props.options;
+  }
+
   const data = props.data || [];
   
   // 转换数据格式，应用自定义颜色
@@ -276,6 +281,7 @@ watch(
     props.showValue,
     props.legendShowValue,
     props.legendShowPercent,
+    props.options,
   ],
   () => {
     updateChart();

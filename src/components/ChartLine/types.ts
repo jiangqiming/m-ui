@@ -83,5 +83,7 @@ export interface ChartLineProps {
       fontSize?: number
     }
   }
+  /** 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性。参考：https://echarts.apache.org/zh/option.html#series-line.type */
+  options?: any
 }
 

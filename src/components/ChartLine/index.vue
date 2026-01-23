@@ -94,6 +94,11 @@ const computedHeight = computed(() => {
 
 // 构建 ECharts 配置
 const buildOption = (): echarts.EChartsOption => {
+  // 如果传入了 options，直接使用 options
+  if (props.options) {
+    return props.options;
+  }
+
   const seriesData = props.series || [];
   const categories = props.categories || [];
 
@@ -300,25 +305,26 @@ onMounted(() => {
 });
 
 // 监听数据变化
-watch(
-  () => [
-    props.series,
-    props.categories,
-    props.colors,
-    props.showLegend,
-    props.legendPosition,
-    props.backgroundColor,
-    props.showGrid,
-    props.gridLineStyle,
-    props.showTooltip,
-    props.showLabel,
-    props.yAxisMin,
-    props.yAxisMax,
-    props.yAxisSplitNumber,
-    props.grid,
-    props.xAxis,
-    props.yAxis,
-  ],
+  watch(
+    () => [
+      props.series,
+      props.categories,
+      props.colors,
+      props.showLegend,
+      props.legendPosition,
+      props.backgroundColor,
+      props.showGrid,
+      props.gridLineStyle,
+      props.showTooltip,
+      props.showLabel,
+      props.yAxisMin,
+      props.yAxisMax,
+      props.yAxisSplitNumber,
+      props.grid,
+      props.xAxis,
+      props.yAxis,
+      props.options,
+    ],
   () => {
     updateChart();
   },

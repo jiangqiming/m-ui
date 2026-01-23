@@ -81,6 +81,11 @@ const totalCount = computed(() => {
 
 // 构建 ECharts 配置
 const buildOption = (): echarts.EChartsOption => {
+  // 如果传入了 options，直接使用 options
+  if (props.options) {
+    return props.options;
+  }
+
   const seriesData = props.series || [];
   const categories = props.categories || [];
 
@@ -343,16 +348,17 @@ const initScroll = () => {
 };
 
 // 监听数据变化
-watch(
-  () => [
-    props.series,
-    props.categories,
-    props.direction,
-    props.colors,
-    props.showLegend,
-    props.barGap,
-    props.barCategoryGap,
-  ],
+  watch(
+    () => [
+      props.series,
+      props.categories,
+      props.direction,
+      props.colors,
+      props.showLegend,
+      props.barGap,
+      props.barCategoryGap,
+      props.options,
+    ],
   () => {
     updateChart();
     // 数据变化时重新初始化滚动

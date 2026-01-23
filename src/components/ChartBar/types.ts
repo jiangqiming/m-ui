@@ -35,5 +35,7 @@ export interface ChartBarProps {
   enableScroll?: boolean
   /** 每次滚动显示的数据项数量 */
   visibleCount?: number
+  /** 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性。参考：https://echarts.apache.org/zh/option.html#series-bar.type */
+  options?: any
 }
 

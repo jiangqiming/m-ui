@@ -590,6 +590,87 @@ import { MChartLine } from '@jqkgg/m-ui'
 ```
 </CodeBlock>
 
+## 完全自定义配置
+
+通过 `options` 属性可以完全自定义 ECharts 配置项，传入后将以 `options` 为准，忽略其他属性。这允许你使用 ECharts 的所有功能。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartLine
+      :options="{
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+          type: 'line',
+          smooth: true,
+          areaStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: 'rgba(128, 255, 165, 0.8)' },
+                { offset: 1, color: 'rgba(1, 191, 236, 0.1)' }
+              ]
+            }
+          }
+        }]
+      }"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartLine
+    :options="{
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        type: 'line',
+        smooth: true,
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(128, 255, 165, 0.8)' },
+              { offset: 1, color: 'rgba(1, 191, 236, 0.1)' }
+            ]
+          }
+        }
+      }]
+    }"
+  />
+</template>
+
+<script setup>
+import { MChartLine } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+**注意**：使用 `options` 时，需要参考 [ECharts 折线图配置项文档](https://echarts.apache.org/zh/option.html#series-line.type) 来配置所有选项。
+
 ## API
 
 ### Props
@@ -615,6 +696,7 @@ import { MChartLine } from '@jqkgg/m-ui'
 | grid | 网格配置 | [Grid](#Grid) | — | `{ left: '10%', right: '10%', top: '15%', bottom: '15%' }` |
 | xAxis | X轴配置 | [XAxis](#XAxis) | — | `{ show: true, axisLabel: { rotate: 0, interval: 'auto' } }` |
 | yAxis | Y轴配置 | [YAxis](#YAxis) | — | `{ show: true, name: '', nameLocation: 'end' }` |
+| options | 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性 | object<br>**注意**：`options` 的类型定义请参考 [ECharts 折线图配置项文档](https://echarts.apache.org/zh/option.html#series-line.type) | — | undefined |
 
 ### ChartLineSeries {#ChartLineSeries}
 

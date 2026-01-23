@@ -343,6 +343,103 @@ import { MChartBar } from '@jqkgg/m-ui'
 ```
 </CodeBlock>
 
+## 完全自定义配置
+
+通过 `options` 属性可以完全自定义 ECharts 配置项，传入后将以 `options` 为准，忽略其他属性。这允许你使用 ECharts 的所有功能。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartBar
+      :options="{
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar',
+          itemStyle: {
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: '#83bff6' },
+                { offset: 0.5, color: '#188df0' },
+                { offset: 1, color: '#188df0' }
+              ]
+            }
+          },
+          emphasis: {
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  { offset: 0, color: '#2378f7' },
+                  { offset: 0.7, color: '#2378f7' },
+                  { offset: 1, color: '#83bff6' }
+                ]
+              }
+            }
+          }
+        }]
+      }"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartBar
+    :options="{
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [{
+        data: [120, 200, 150, 80, 70, 110, 130],
+        type: 'bar',
+        itemStyle: {
+          color: {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              { offset: 0, color: '#83bff6' },
+              { offset: 0.5, color: '#188df0' },
+              { offset: 1, color: '#188df0' }
+            ]
+          }
+        }
+      }]
+    }"
+  />
+</template>
+
+<script setup>
+import { MChartBar } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+**注意**：使用 `options` 时，需要参考 [ECharts 柱状图配置项文档](https://echarts.apache.org/zh/option.html#series-bar.type) 来配置所有选项。
+
 ## API
 
 ### Props
@@ -363,6 +460,8 @@ import { MChartBar } from '@jqkgg/m-ui'
 | scrollInterval | 滚动间隔（毫秒） | number | — | 2000 |
 | enableScroll | 是否启用滚动（undefined 表示自动判断） | boolean \| undefined | — | undefined |
 | visibleCount | 每次显示的数据项数量 | number | — | 8 |
+| options | 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性 | object<br>**注意**：`options` 的类型定义请参考 [ECharts 柱状图配置项文档](https://echarts.apache.org/zh/option.html#series-bar.type) | — | undefined |
+
 
 ### ChartBarSeries
 
