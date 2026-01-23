@@ -1,6 +1,6 @@
 {
   "name": "@jqkgg/m-ui",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "一个基于 Vue3 的组件库",
   "type": "module",
   "main": "./dist/m-ui.umd.cjs",
@@ -38,7 +38,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jqkgg/m-ui.git"
+    "url": "git+https://github.com/jqkgg/m-ui.git"
   },
   "homepage": "https://github.com/jqkgg/m-ui#readme",
   "bugs": {

@@ -106,7 +106,7 @@ const buildOption = (): echarts.EChartsOption => {
   const echartsSeries: LineSeriesOption[] = seriesData.map(
     (item: ChartLineSeries, index: number) => {
       const seriesColor = item.color || props.colors[index % props.colors.length];
-      const lineTypeMap = {
+      const lineTypeMap: Record<string, "solid" | "dashed" | "dotted"> = {
         solid: "solid",
         dashed: "dashed",
         dotted: "dotted",
@@ -120,7 +120,7 @@ const buildOption = (): echarts.EChartsOption => {
         lineStyle: {
           color: seriesColor,
           width: item.lineWidth || 2,
-          type: item.lineType ? lineTypeMap[item.lineType] : "solid",
+          type: item.lineType ? (lineTypeMap[item.lineType] as "solid" | "dashed" | "dotted") : "solid",
         },
         itemStyle: {
           color: seriesColor,

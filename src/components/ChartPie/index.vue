@@ -80,7 +80,7 @@ const buildOption = (): echarts.EChartsOption => {
   const legendConfig = props.showLegend
     ? {
         show: true,
-        orient: props.legendPosition === "left" || props.legendPosition === "right" ? "vertical" : "horizontal",
+        orient: (props.legendPosition === "left" || props.legendPosition === "right" ? "vertical" : "horizontal") as "vertical" | "horizontal",
         left: props.legendPosition === "left" ? "left" : props.legendPosition === "right" ? "right" : "center",
         top: props.legendPosition === "top" ? "top" : props.legendPosition === "bottom" ? "bottom" : "middle",
         formatter: (name: string) => {

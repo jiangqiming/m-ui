@@ -48,7 +48,6 @@ const props = withDefaults(defineProps<ResponsivePageProps>(), {
 });
 
 const containerRef = ref<HTMLDivElement | null>(null);
-const contentRef = ref<HTMLDivElement | null>(null);
 const { width: windowWidth, height: windowHeight } = useWindowSize();
 const scale = ref(1);
 

@@ -381,83 +381,83 @@ const buildOption = (): echarts.EChartsOption => {
     };
   });
 
-  // 图例配置
-  const legendConfig =
-    props.showLegend && ranges.value.length > 0
-      ? {
-          show: true,
-          orient: (props.legendPosition === "left" || props.legendPosition === "right"
-            ? "vertical"
-            : "horizontal") as "vertical" | "horizontal",
-          left:
-            props.legendPosition === "left"
-              ? "left"
-              : props.legendPosition === "right"
-              ? "right"
-              : "center",
-          top:
-            props.legendPosition === "top"
-              ? "top"
-              : props.legendPosition === "bottom"
-              ? "bottom"
-              : "middle",
-          textStyle: {
-            color: "#333",
-            fontSize: 12,
-          },
-          // 使用字符串数组作为图例项名称
-          data: ranges.value.map((range: ChartMapCqRange) => range.label),
-          formatter: (name: string) => {
-            const range = ranges.value.find((r: ChartMapCqRange) => r.label === name);
-            return range ? range.label : name;
-          },
-          itemWidth: 14,
-          itemHeight: 14,
-          itemGap: 10,
-          selectedMode: false, // 禁用选择功能
-          // 为每个图例项设置图标和颜色
-          icon: "rect",
-          itemStyle: {
-            borderColor: "#fff",
-            borderWidth: 1,
-          },
-          // 使用 formatter 和 rich 来显示颜色
-          rich: ranges.value.reduce((acc: any, range: ChartMapCqRange, index: number) => {
-            acc[`color_${index}`] = {
-              width: 12,
-              height: 12,
-              backgroundColor: range.color,
-              borderRadius: 2,
-            };
-            return acc;
-          }, {}),
-        }
-      : props.showLegend
-      ? {
-          show: true,
-          orient: (props.legendPosition === "left" || props.legendPosition === "right"
-            ? "vertical"
-            : "horizontal") as "vertical" | "horizontal",
-          left:
-            props.legendPosition === "left"
-              ? "left"
-              : props.legendPosition === "right"
-              ? "right"
-              : "center",
-          top:
-            props.legendPosition === "top"
-              ? "top"
-              : props.legendPosition === "bottom"
-              ? "bottom"
-              : "middle",
-          textStyle: {
-            color: "#333",
-            fontSize: 12,
-          },
-        }
-      : {
-          show: false,
-        };
+  // 图例配置（已注释，因为使用 graphic 手动绘制图例）
+  // const legendConfig =
+  //   props.showLegend && ranges.value.length > 0
+  //     ? {
+  //         show: true,
+  //         orient: (props.legendPosition === "left" || props.legendPosition === "right"
+  //           ? "vertical"
+  //           : "horizontal") as "vertical" | "horizontal",
+  //         left:
+  //           props.legendPosition === "left"
+  //             ? "left"
+  //             : props.legendPosition === "right"
+  //             ? "right"
+  //             : "center",
+  //         top:
+  //           props.legendPosition === "top"
+  //             ? "top"
+  //             : props.legendPosition === "bottom"
+  //             ? "bottom"
+  //             : "middle",
+  //         textStyle: {
+  //           color: "#333",
+  //           fontSize: 12,
+  //         },
+  //         // 使用字符串数组作为图例项名称
+  //         data: ranges.value.map((range: ChartMapCqRange) => range.label),
+  //         formatter: (name: string) => {
+  //           const range = ranges.value.find((r: ChartMapCqRange) => r.label === name);
+  //           return range ? range.label : name;
+  //         },
+  //         itemWidth: 14,
+  //         itemHeight: 14,
+  //         itemGap: 10,
+  //         selectedMode: false, // 禁用选择功能
+  //         // 为每个图例项设置图标和颜色
+  //         icon: "rect",
+  //         itemStyle: {
+  //           borderColor: "#fff",
+  //           borderWidth: 1,
+  //         },
+  //         // 使用 formatter 和 rich 来显示颜色
+  //         rich: ranges.value.reduce((acc: any, range: ChartMapCqRange, index: number) => {
+  //           acc[`color_${index}`] = {
+  //             width: 12,
+  //             height: 12,
+  //             backgroundColor: range.color,
+  //             borderRadius: 2,
+  //           };
+  //           return acc;
+  //         }, {}),
+  //       }
+  //     : props.showLegend
+  //     ? {
+  //         show: true,
+  //         orient: (props.legendPosition === "left" || props.legendPosition === "right"
+  //           ? "vertical"
+  //           : "horizontal") as "vertical" | "horizontal",
+  //         left:
+  //           props.legendPosition === "left"
+  //             ? "left"
+  //             : props.legendPosition === "right"
+  //             ? "right"
+  //             : "center",
+  //         top:
+  //           props.legendPosition === "top"
+  //             ? "top"
+  //             : props.legendPosition === "bottom"
+  //             ? "bottom"
+  //             : "middle",
+  //         textStyle: {
+  //           color: "#333",
+  //           fontSize: 12,
+  //         },
+  //       }
+  //     : {
+  //         show: false,
+  //       };
 
   // 特殊标注
   const specialLabelsGraphic =
