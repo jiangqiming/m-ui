@@ -49,6 +49,7 @@ export default defineConfig({
             { text: 'ChartBar 柱状图', link: '/components/barchart' },
             { text: 'ChartBar3D 3D柱状图', link: '/components/bar3dchart' },
             { text: 'ChartPie 饼图', link: '/components/piechart' },
+            { text: 'ChartLine 折线图', link: '/components/linechart' },
             { text: 'ChartMapCq 重庆地图', link: '/components/mapcq' },
             { text: 'ChartMapCq3D 重庆3D地图', link: '/components/mapcq3d' },
           ]
