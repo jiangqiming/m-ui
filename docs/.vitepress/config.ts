@@ -65,6 +65,7 @@ export default defineConfig({
             { text: 'ResponsivePage 响应式页面', link: '/components/responsivepage' },
             { text: 'ScrollBox 滚动容器', link: '/components/scrollbox' },
             { text: 'EllipsisText 文本省略', link: '/components/ellipsistext' },
+            { text: 'GradationText 文字颜色渐变', link: '/components/gradationtext' },
           ]
         },
         {

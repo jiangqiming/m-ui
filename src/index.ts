@@ -14,9 +14,10 @@ import MChartMapCq3D from './components/ChartMapCq3D/index.vue'
 import MResponsivePage from './components/ResponsivePage/index.vue'
 import MScrollBox from './components/ScrollBox/index.vue'
 import MEllipsisText from './components/EllipsisText/index.vue'
+import MGradationText from './components/GradationText/index.vue'
 
 // 导出组件
-export { MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MResponsivePage, MScrollBox, MEllipsisText }
+export { MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MResponsivePage, MScrollBox, MEllipsisText, MGradationText }
 
 // 导出类型
 export type { ButtonProps } from './components/Button/types'
@@ -31,9 +32,10 @@ export type { ChartMapCq3DProps, ChartMapCq3DDataItem, ChartMapCq3DRange } from 
 export type { ResponsivePageProps, ResponsiveBreakpoint, ResponsiveBreakpoints } from './components/ResponsivePage/types'
 export type { ScrollBoxProps } from './components/ScrollBox/types'
 export type { EllipsisTextProps, EllipsisTextTag, EllipsisTextPlacement, EllipsisTextTruncateFrom } from './components/EllipsisText/types'
+export type { GradationTextProps, GradationTextDirection } from './components/GradationText/types'
 
 // 组件列表
-const components = [MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MResponsivePage, MScrollBox, MEllipsisText]
+const components = [MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MResponsivePage, MScrollBox, MEllipsisText, MGradationText]
 
 // 安装函数
 const install = (app: App) => {
@@ -57,6 +59,7 @@ export default {
   MChartMapCq3D,
   MResponsivePage,
   MScrollBox,
-  MEllipsisText
+  MEllipsisText,
+  MGradationText
 }
 
