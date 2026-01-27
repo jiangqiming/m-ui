@@ -105,7 +105,7 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 
 ## 显示主城区
 
-通过 `show-main-city-in-corner` 属性可以控制是否在左上角显示主城区。
+通过 `show-main-city-in-corner` 属性可以控制是否在左上角显示主城区(未知问题: 当设置`show-main-city-in-corner="true"`时, 整个地图无法渲染, 但组件可正常使用)。
 
 <Demo>
   <div style="width: 100%; height: 450px;">
