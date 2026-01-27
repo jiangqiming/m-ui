@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<ChartMapCqProps>(), {
   data: () => [],
   geoJson: undefined,
   mapName: "chongqing",
-  showMainCityInCorner: true,
+  showMainCityInCorner: false, // 默认false, 当默认为true时, 组件文档发布到github, 地图无法渲染出来
   mainCityNames: () => [
     "两江新区",
     "渝北区",

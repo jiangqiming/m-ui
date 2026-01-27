@@ -72,7 +72,6 @@ import chongqingMainGeoJson from '../../src/assets/geo/chongqing-main.json'
   <div style="width: 100%; height: 450px;">
     <MChartMapCq
       :data="data1"
-      :show-main-city-in-corner="false"
       :height="450"
       legend-position="right"
     />
@@ -104,7 +103,7 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 ```
 </CodeBlock>
 
-## 隐藏主城区
+## 显示主城区
 
 通过 `show-main-city-in-corner` 属性可以控制是否在左上角显示主城区。
 
@@ -112,7 +111,7 @@ import { MChartMapCq } from '@jqkgg/m-ui'
   <div style="width: 100%; height: 450px;">
     <MChartMapCq
       :data="data1"
-      :show-main-city-in-corner="false"
+      :show-main-city-in-corner="true"
       :height="450"
     />
   </div>
@@ -124,7 +123,7 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 <template>
   <MChartMapCq
     :data="data"
-    :show-main-city-in-corner="false"
+    :show-main-city-in-corner="true"
     :height="450"
   />
 </template>
@@ -483,7 +482,7 @@ import chongqingGeoJson from '../../src/assets/geo/chongqing.json'
 | data | 地图数据数组 | [ChartMapCqDataItem[]](#ChartMapCqDataItem) | — | `[]` |
 | geoJson | 地图GeoJSON数据 | any | — | `undefined` |
 | mapName | 地图名称（用于注册echarts地图） | string | — | `'chongqing'` |
-| showMainCityInCorner | 是否显示主城区在左上角 | boolean | — | `true` |
+| showMainCityInCorner | 是否显示主城区在左上角 | boolean | — | `false` |
 | mainCityNames | 主城区区域名称数组 | string[] | — | `['渝中区', '大渡口区', ...]` |
 | ranges | 颜色范围配置 | [ChartMapCqRange[]](#ChartMapCqRange) | — | `undefined` |
 | defaultRanges | 是否使用默认颜色范围（序时进度） | boolean | — | `true` |
