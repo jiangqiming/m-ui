@@ -125,6 +125,8 @@ import { MResponsivePage } from '@jqkgg/m-ui'
 
 通过 `enable-scale` 属性可以启用响应式缩放功能，适用于固定设计稿尺寸（如 1920×1080）在不同分辨率下的适配。
 
+组件使用 CSS `transform: scale()` 实现缩放，根据窗口尺寸（`window.innerWidth` 和 `window.innerHeight`）与基准尺寸（`baseWidth` 和 `baseHeight`）的比例自动计算缩放值。缩放从左上角（`transform-origin: left top`）开始，确保内容正确对齐。窗口大小变化时使用防抖（debounce）优化性能。
+
 <Demo>
   <div style="width: 100%; height: 500px; border: 1px solid #ddd; overflow: hidden;">
     <MResponsivePage 
@@ -398,10 +400,14 @@ import { MResponsivePage } from '@jqkgg/m-ui'
 
 ### 缩放模式说明
 
-- **fit**: 按比例缩放，保持宽高比，取宽度和高度的最小缩放比例
-- **width**: 仅按宽度缩放
-- **height**: 仅按高度缩放
-- **both**: 同时按宽度和高度缩放，取较小的缩放比例
+组件使用 CSS `transform: scale(scaleX, scaleY)` 实现缩放，支持以下缩放模式：
+
+- **fit**: 按比例缩放，保持宽高比。取窗口宽度和高度与基准尺寸比例的最小值，同时应用于 X 和 Y 轴（`scale(min(w, h), min(w, h))`）
+- **width**: 仅按宽度缩放。使用窗口宽度与基准宽度的比例，同时应用于 X 和 Y 轴（`scale(w, w)`）
+- **height**: 仅按高度缩放。使用窗口高度与基准高度的比例，同时应用于 X 和 Y 轴（`scale(h, h)`）
+- **both**: 同时按宽度和高度缩放，取较小的缩放比例。与 `fit` 模式相同（`scale(min(w, h), min(w, h))`）
+
+**注意**：缩放基于窗口尺寸（`window.innerWidth` 和 `window.innerHeight`）计算，内容区域固定为基准尺寸（`baseWidth × baseHeight`），通过 CSS transform 实现缩放效果。
 
 ### 使用场景
 

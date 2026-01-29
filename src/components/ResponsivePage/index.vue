@@ -6,7 +6,7 @@
   >
     <div
       ref="contentRef"
-      :class="['m-responsive-page__content', { 'm-responsive-page__content--scaled': enableScale && scale > 0 }]"
+      :class="['m-responsive-page__content', { 'm-responsive-page__content--scaled': enableScale && scaleX > 0 && scaleY > 0 }]"
       :style="contentStyle"
     >
       <slot></slot>
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
-import { useWindowSize } from "@vueuse/core";
+import { debounce } from "lodash";
 import type { ResponsivePageProps } from "./types";
 
 defineOptions({
@@ -48,8 +48,8 @@ const props = withDefaults(defineProps<ResponsivePageProps>(), {
 });
 
 const containerRef = ref<HTMLDivElement | null>(null);
-const { width: windowWidth, height: windowHeight } = useWindowSize();
-const scale = ref(1);
+const scaleX = ref(1);
+const scaleY = ref(1);
 
 // 计算容器样式
 const containerStyle = computed(() => {
@@ -103,87 +103,71 @@ const containerStyle = computed(() => {
 const contentStyle = computed(() => {
   const style: Record<string, string> = {};
 
-  if (props.enableScale && scale.value > 0) {
-    style.transform = `scale(${scale.value})`;
-    style.transformOrigin = "top left";
+  if (props.enableScale) {
+    // 固定内容区域为基准尺寸
+    style.width = `${props.baseWidth}px`;
+    style.height = `${props.baseHeight}px`;
     
-    // 根据缩放模式调整宽度和高度
-    if (props.scaleMode === "width" || props.scaleMode === "both" || props.scaleMode === "fit") {
-      style.width = `${props.baseWidth}px`;
-    }
-    
-    if (props.scaleMode === "height" || props.scaleMode === "both" || props.scaleMode === "fit") {
-      style.height = `${props.baseHeight}px`;
-    }
+    // 使用 scale(scaleX, scaleY) 同时缩放 X 和 Y 轴
+    style.transform = `scale(${scaleX.value}, ${scaleY.value})`;
+    style.transformOrigin = "left top";
   }
 
   return style;
 });
 
-// 计算缩放比例
-const calculateScale = () => {
-  if (!props.enableScale || !containerRef.value) {
-    scale.value = 1;
-    return;
+// 获取缩放比例（参考 demo.vue 的逻辑）
+const getScale = () => {
+  if (!props.enableScale) {
+    return [1, 1];
   }
 
-  const container = containerRef.value;
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
+  const w = window.innerWidth / props.baseWidth;
+  const h = window.innerHeight / props.baseHeight;
 
-  let scaleX = 1;
-  let scaleY = 1;
-
+  // 根据缩放模式返回不同的缩放比例
   switch (props.scaleMode) {
     case "width":
-      scaleX = containerWidth / props.baseWidth;
-      scale.value = scaleX;
-      break;
+      return [w, w];
     case "height":
-      scaleY = containerHeight / props.baseHeight;
-      scale.value = scaleY;
-      break;
+      return [h, h];
     case "both":
-      scaleX = containerWidth / props.baseWidth;
-      scaleY = containerHeight / props.baseHeight;
-      scale.value = Math.min(scaleX, scaleY);
-      break;
+      const minScale = Math.min(w, h);
+      return [minScale, minScale];
     case "fit":
     default:
-      scaleX = containerWidth / props.baseWidth;
-      scaleY = containerHeight / props.baseHeight;
-      scale.value = Math.min(scaleX, scaleY);
-      break;
+    //   const fitScale = Math.min(w, h);
+    //   return [fitScale, fitScale];
+      return [w, h];
   }
 };
 
-// 监听窗口大小变化
-watch([windowWidth, windowHeight], () => {
-  if (props.enableScale) {
-    calculateScale();
+// 设置缩放比例
+const setScale = () => {
+  if (!props.enableScale) {
+    scaleX.value = 1;
+    scaleY.value = 1;
+    return;
   }
-});
 
-// 监听容器尺寸变化
-let resizeObserver: ResizeObserver | null = null;
+  const [x, y] = getScale();
+  scaleX.value = x;
+  scaleY.value = y;
+};
+
+// 防抖处理 resize 事件
+const debouncedSetScale = debounce(setScale, 100);
 
 onMounted(() => {
-  if (props.enableScale && containerRef.value) {
-    calculateScale();
-    
-    // 使用 ResizeObserver 监听容器尺寸变化
-    resizeObserver = new ResizeObserver(() => {
-      calculateScale();
-    });
-    
-    resizeObserver.observe(containerRef.value);
+  if (props.enableScale) {
+    setScale();
+    window.addEventListener("resize", debouncedSetScale);
   }
 });
 
 onBeforeUnmount(() => {
-  if (resizeObserver) {
-    resizeObserver.disconnect();
-    resizeObserver = null;
+  if (props.enableScale) {
+    window.removeEventListener("resize", debouncedSetScale);
   }
 });
 
@@ -192,9 +176,10 @@ watch(
   () => [props.enableScale, props.baseWidth, props.baseHeight, props.scaleMode],
   () => {
     if (props.enableScale) {
-      calculateScale();
+      setScale();
     } else {
-      scale.value = 1;
+      scaleX.value = 1;
+      scaleY.value = 1;
     }
   }
 );

@@ -66,5 +66,8 @@
     "vitepress": "^1.0.0",
     "vue": "^3.4.0",
     "vue-tsc": "^3.2.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.23"
   }
 }
