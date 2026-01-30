@@ -181,15 +181,25 @@ const extractDistrictAdcodes = (geoJson: any) => {
   console.log("Sample districts:", Array.from(districtAdcodeMap.value.entries()).slice(0, 5));
 };
 
-// 加载区县GeoJSON数据
+// 加载区县GeoJSON数据（包含镇街边界）
 const loadDistrictGeoJson = async (adcode: string): Promise<any> => {
   try {
-    // 从阿里云DataV API加载区县地图数据
-    const response = await fetch(
-      `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`
+    // 优先尝试加载完整数据（包含镇街边界）
+    let response = await fetch(
+      `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}_full.json`
     );
+    
+    // 如果完整数据加载失败，尝试加载简化数据
+    if (!response.ok) {
+      console.log(`尝试加载完整数据失败，使用简化数据: ${adcode}`);
+      response = await fetch(
+        `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`
+      );
+    }
+    
     if (response.ok) {
       const geoData = await response.json();
+      console.log(`成功加载区县地图数据: ${adcode}，包含 ${geoData.features?.length || 0} 个区域`);
       return geoData;
     } else {
       throw new Error(`无法加载区县地图数据: ${adcode}`);
@@ -518,19 +528,31 @@ const buildOption = (): echarts.EChartsOption => {
     }
 
     // 确保返回的数据格式符合 ECharts map 系列的要求
+    // 区县层级时使用更明显的边框来显示镇街边界
+    const defaultBorderColor = isDistrictLevel 
+      ? (props.areaStyle?.borderColor || "#666") 
+      : (props.areaStyle?.borderColor || "#fff");
+    const defaultBorderWidth = isDistrictLevel 
+      ? (props.areaStyle?.borderWidth || 0.5) 
+      : (props.areaStyle?.borderWidth || 1);
+    
     return {
       name: item.name,
       value: item.value,
       itemStyle: {
         areaColor: color, // 始终设置 areaColor，确保颜色能正确应用
-        borderColor: props.areaStyle?.borderColor || "#fff",
-        borderWidth: props.areaStyle?.borderWidth || 1,
+        borderColor: defaultBorderColor,
+        borderWidth: defaultBorderWidth,
       },
       emphasis: {
         itemStyle: {
           areaColor: props.emphasis?.areaColor || "#ffff00",
-          borderColor: props.emphasis?.borderColor || "#fff",
-          borderWidth: props.emphasis?.borderWidth || 2,
+          borderColor: isDistrictLevel 
+            ? (props.emphasis?.borderColor || "#1890ff") 
+            : (props.emphasis?.borderColor || "#fff"),
+          borderWidth: isDistrictLevel 
+            ? (props.emphasis?.borderWidth || 1.5) 
+            : (props.emphasis?.borderWidth || 2),
         },
       },
       label: {
@@ -819,8 +841,14 @@ const buildOption = (): echarts.EChartsOption => {
           : seriesData.filter((item: any) => !item.name.endsWith("_main")),
         itemStyle: {
           areaColor: props.areaStyle?.areaColor || "#5b9bd5",
-          borderColor: props.areaStyle?.borderColor || "#fff",
-          borderWidth: props.areaStyle?.borderWidth || 1,
+          // 边框样式由 seriesData 中的 itemStyle 控制，这里只设置默认值
+          // 区县层级时使用更明显的边框来显示镇街边界
+          borderColor: isDistrictLevel 
+            ? (props.areaStyle?.borderColor || "#666") 
+            : (props.areaStyle?.borderColor || "#fff"),
+          borderWidth: isDistrictLevel 
+            ? (props.areaStyle?.borderWidth || 0.5) 
+            : (props.areaStyle?.borderWidth || 1),
         },
         emphasis: {
           itemStyle: {
