@@ -386,6 +386,183 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 - 如果区县没有对应的地图数据，会在控制台输出警告信息
 - 下钻功能会自动从GeoJSON数据中提取区县的adcode信息
 - 如果在下钻状态下禁用下钻功能，会自动返回到市级地图
+- **重要**：阿里云DataV API的区县数据通常只包含区县边界，不包含镇街级别的详细划分。如需显示镇街边界，请使用自定义GeoJSON数据（见下方说明）
+
+## 自定义区县GeoJSON数据（显示镇街边界）
+
+由于阿里云DataV API的区县数据通常不包含镇街级别的详细划分，组件提供了两种方式来使用自定义的区县GeoJSON数据（包含镇街边界）：
+
+### 方式1：使用 districtGeoJsonMap 属性
+
+通过 `district-geo-json-map` 属性传入一个对象，key为区县名称，value为包含镇街边界的GeoJSON数据。
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartMapCq
+    :data="data"
+    :enable-drill-down="true"
+    :district-geo-json-map="districtGeoJsonMap"
+    :height="450"
+  />
+</template>
+
+<script setup>
+import { MChartMapCq } from '@jqkgg/m-ui'
+// 导入包含镇街边界的区县GeoJSON文件
+import wanzhouGeoJson from './assets/geo/wanzhou.json'
+import yubeiGeoJson from './assets/geo/yubei.json'
+
+// 创建区县GeoJSON数据映射
+const districtGeoJsonMap = {
+  '万州区': wanzhouGeoJson,
+  '渝北区': yubeiGeoJson,
+  // 可以添加更多区县的数据
+  // '江北区': jiangbeiGeoJson,
+  // ...
+}
+
+const data = [
+  { name: '万州区', value: 40 },
+  { name: '渝北区', value: 60 },
+  // ...
+]
+</script>
+```
+</CodeBlock>
+
+**说明**：
+- `districtGeoJsonMap` 是一个对象，键为区县名称（必须与 `data` 中的 `name` 字段完全匹配）
+- 值为GeoJSON数据对象，应包含该区县下辖的镇街边界信息
+- 如果某个区县在 `districtGeoJsonMap` 中有数据，将优先使用该数据，不会从API加载
+- 如果某个区县不在 `districtGeoJsonMap` 中，将使用默认的API加载方式
+
+### 方式2：使用 loadDistrictGeoJsonFn 自定义加载函数
+
+通过 `load-district-geo-json-fn` 属性传入一个异步函数，自定义区县数据的加载逻辑。
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartMapCq
+    :data="data"
+    :enable-drill-down="true"
+    :load-district-geo-json-fn="loadDistrictGeoJsonFn"
+    :height="450"
+  />
+</template>
+
+<script setup>
+import { MChartMapCq } from '@jqkgg/m-ui'
+
+// 自定义加载函数
+const loadDistrictGeoJsonFn = async (districtName, adcode) => {
+  try {
+    // 方式1：从本地文件加载
+    const response = await fetch(`/assets/geo/${districtName}.json`)
+    if (response.ok) {
+      return await response.json()
+    }
+    
+    // 方式2：从其他API加载
+    // const response = await fetch(`https://your-api.com/districts/${adcode}.json`)
+    // return await response.json()
+    
+    // 方式3：从本地存储或其他数据源加载
+    // return getDistrictGeoJsonFromLocalStorage(districtName)
+    
+    throw new Error(`无法加载 ${districtName} 的地图数据`)
+  } catch (error) {
+    console.error(`加载区县数据失败: ${districtName}`, error)
+    // 如果加载失败，可以返回null，组件会使用默认的API加载方式
+    return null
+  }
+}
+
+const data = [
+  { name: '万州区', value: 40 },
+  // ...
+]
+</script>
+```
+</CodeBlock>
+
+**函数参数**：
+- `districtName` (string): 区县名称，如 "万州区"
+- `adcode` (string): 区县的行政区划代码，如 "500101"
+
+**返回值**：
+- 返回 `Promise<GeoJSON>`：成功时返回GeoJSON数据对象
+- 返回 `Promise<null>`：如果加载失败，返回null，组件会尝试使用默认的API加载方式
+
+### 数据加载优先级
+
+组件按以下优先级加载区县GeoJSON数据：
+
+1. **最高优先级**：`districtGeoJsonMap` 中对应区县的数据
+2. **次优先级**：`loadDistrictGeoJsonFn` 自定义加载函数返回的数据
+3. **默认方式**：从阿里云DataV API加载（`https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`）
+
+### 获取包含镇街边界的GeoJSON数据
+
+要获取包含镇街边界的区县GeoJSON数据，可以通过以下方式：
+
+1. **从GitHub等开源项目获取**：
+   - 搜索 "中国区县GeoJSON"、"重庆区县地图数据" 等关键词
+   - 一些开源项目提供了包含镇街边界的详细数据
+
+2. **从地图数据服务商获取**：
+   - 高德地图开放平台
+   - 百度地图开放平台
+   - 腾讯位置服务
+
+3. **自行制作**：
+   - 使用 QGIS、ArcGIS 等工具从官方数据源制作
+   - 从国家基础地理信息中心等官方机构获取数据
+
+### 完整示例
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartMapCq
+    :data="mapData"
+    :enable-drill-down="true"
+    :district-geo-json-map="districtGeoJsonMap"
+    :height="600"
+    :area-style="{
+      borderColor: '#666',
+      borderWidth: 0.5
+    }"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { MChartMapCq } from '@jqkgg/m-ui'
+
+// 导入包含镇街边界的GeoJSON文件
+import wanzhouGeoJson from './assets/geo/wanzhou-with-streets.json'
+
+// 地图数据
+const mapData = ref([
+  { name: '万州区', value: 45 },
+  { name: '渝北区', value: 60 },
+  { name: '江北区', value: 55 },
+  // ...
+])
+
+// 区县GeoJSON数据映射（包含镇街边界）
+const districtGeoJsonMap = {
+  '万州区': wanzhouGeoJson,
+  // 可以逐步添加其他区县的数据
+}
+</script>
+```
+</CodeBlock>
 
 ## 特殊标注
 
@@ -484,9 +661,12 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 3. 如果筛选失败，从阿里云API加载完整地图后筛选
 
 ### 区县地图数据（下钻时自动加载）
-- 当点击区县下钻时，组件会自动从阿里云DataV API加载区县地图数据
-- API地址格式：`https://geo.datav.aliyun.com/areas_v3/bound/{adcode}_full.json`
+- 当点击区县下钻时，组件会按以下优先级加载区县地图数据：
+  1. 优先使用 `district-geo-json-map` 中提供的自定义数据
+  2. 其次使用 `load-district-geo-json-fn` 自定义加载函数
+  3. 最后从阿里云DataV API加载：`https://geo.datav.aliyun.com/areas_v3/bound/{adcode}.json`
 - 区县的adcode信息会自动从市级地图的GeoJSON数据中提取
+- **重要提示**：阿里云DataV API的区县数据通常只包含区县边界，不包含镇街级别的详细划分。如需显示镇街边界，请使用自定义GeoJSON数据（详见上方"自定义区县GeoJSON数据"章节）
 
 **主城区包括九区**：渝北区、江北区、北碚区、沙坪坝区、渝中区、南岸区、九龙坡区、大渡口区、巴南区
 
@@ -564,6 +744,8 @@ import chongqingGeoJson from '../../src/assets/geo/chongqing.json'
 | specialLabels | 特殊标注区域配置 | [SpecialLabel[]](#SpecialLabel) | — | `[]` |
 | roam | 是否开启鼠标缩放和平移漫游 | boolean \| 'scale' \| 'move' | true / false / 'scale' / 'move' | `false` |
 | enableDrillDown | 是否允许点击区县下钻到详细地图 | boolean | — | `false` |
+| districtGeoJsonMap | 区县GeoJSON数据映射，key为区县名称，value为包含镇街边界的GeoJSON数据 | Record&lt;string, any&gt; | — | `undefined` |
+| loadDistrictGeoJsonFn | 自定义加载区县GeoJSON数据的函数 | (districtName: string, adcode: string) =&gt; Promise&lt;any&gt; | — | `undefined` |
 
 ### ChartMapCqDataItem {#ChartMapCqDataItem}
 
@@ -629,4 +811,6 @@ import chongqingGeoJson from '../../src/assets/geo/chongqing.json'
 4. **颜色映射**：默认使用序时进度的5级颜色映射，可以通过 `ranges` 属性自定义颜色范围。
 
 5. **区县下钻**：组件支持点击区县下钻到详细地图，但默认关闭。需要通过 `enable-drill-down` 属性设置为 `true` 来启用。下钻功能会自动从GeoJSON数据中提取区县的adcode信息，并从阿里云DataV API加载区县地图数据。如果某个区县没有对应的地图数据，会在控制台输出警告信息。如果在下钻状态下禁用下钻功能，会自动返回到市级地图。
+
+6. **镇街边界数据**：阿里云DataV API的区县数据通常只包含区县边界，不包含镇街级别的详细划分。如需显示镇街边界，请使用 `district-geo-json-map` 或 `load-district-geo-json-fn` 属性提供包含镇街边界的自定义GeoJSON数据。数据加载优先级：`districtGeoJsonMap` > `loadDistrictGeoJsonFn` > 默认API加载。
 

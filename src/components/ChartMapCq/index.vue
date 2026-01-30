@@ -181,25 +181,28 @@ const extractDistrictAdcodes = (geoJson: any) => {
   console.log("Sample districts:", Array.from(districtAdcodeMap.value.entries()).slice(0, 5));
 };
 
-// 加载区县GeoJSON数据（包含镇街边界）
+// 加载区县GeoJSON数据（尝试获取镇街边界）
 const loadDistrictGeoJson = async (adcode: string): Promise<any> => {
   try {
-    // 优先尝试加载完整数据（包含镇街边界）
+    // 方式1：尝试加载区县完整数据（可能包含镇街）
+    // 注意：阿里云DataV API的区县数据通常不包含镇街边界
     let response = await fetch(
-      `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}_full.json`
+      `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`
     );
-    
-    // 如果完整数据加载失败，尝试加载简化数据
-    if (!response.ok) {
-      console.log(`尝试加载完整数据失败，使用简化数据: ${adcode}`);
-      response = await fetch(
-        `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`
-      );
-    }
     
     if (response.ok) {
       const geoData = await response.json();
-      console.log(`成功加载区县地图数据: ${adcode}，包含 ${geoData.features?.length || 0} 个区域`);
+      const featureCount = geoData.features?.length || 0;
+      console.log(`成功加载区县地图数据: ${adcode}，包含 ${featureCount} 个区域`);
+      
+      // 如果只包含1个区域，说明没有镇街数据
+      if (featureCount === 1) {
+        console.warn(`区县 ${adcode} 的数据不包含镇街边界，仅显示区县边界`);
+        console.warn(`提示：如需显示镇街边界，请使用本地GeoJSON文件或第三方数据源`);
+      } else if (featureCount > 1) {
+        console.log(`区县 ${adcode} 包含镇街边界数据（${featureCount} 个区域）`);
+      }
+      
       return geoData;
     } else {
       throw new Error(`无法加载区县地图数据: ${adcode}`);
@@ -233,7 +236,27 @@ const handleDistrictDrillDown = async (districtName: string) => {
   }
 
   // 加载区县地图数据
-  const districtGeoJson = await loadDistrictGeoJson(adcode);
+  let districtGeoJson: any = null;
+  
+  // 方式1：优先使用自定义的区县GeoJSON数据映射
+  if (props.districtGeoJsonMap && props.districtGeoJsonMap[districtName]) {
+    districtGeoJson = props.districtGeoJsonMap[districtName];
+    console.log(`使用自定义GeoJSON数据: ${districtName}`);
+  }
+  // 方式2：使用自定义加载函数
+  else if (props.loadDistrictGeoJsonFn) {
+    try {
+      districtGeoJson = await props.loadDistrictGeoJsonFn(districtName, adcode);
+      console.log(`使用自定义加载函数获取数据: ${districtName}`);
+    } catch (error) {
+      console.error(`自定义加载函数失败: ${districtName}`, error);
+    }
+  }
+  // 方式3：从API加载（默认方式）
+  else {
+    districtGeoJson = await loadDistrictGeoJson(adcode);
+  }
+  
   if (!districtGeoJson) {
     console.warn(`无法加载区县 ${districtName} 的地图数据`);
     return;

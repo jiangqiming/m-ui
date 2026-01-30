@@ -80,5 +80,9 @@ export interface ChartMapCqProps {
   roam?: boolean | 'scale' | 'move'
   /** 是否允许点击区县下钻到详细地图。默认为 false（关闭状态） */
   enableDrillDown?: boolean
+  /** 区县GeoJSON数据映射，key为区县名称，value为包含镇街边界的GeoJSON数据。如果提供，将优先使用此数据而不是从API加载 */
+  districtGeoJsonMap?: Record<string, any>
+  /** 自定义加载区县GeoJSON数据的函数，参数为区县名称和adcode，返回Promise<GeoJSON>。如果提供，将使用此函数加载数据 */
+  loadDistrictGeoJsonFn?: (districtName: string, adcode: string) => Promise<any>
 }
 
