@@ -62,6 +62,17 @@ const progressData = ref([
 ])
 const progressMax = ref(100)
 const progressColor = ref(['#87CEEB', '#4169E1'])
+
+// 仪表盘示例数据
+const gaugeData = ref([
+  { name: '完成率', value: 75 }
+])
+
+// 水球示例数据
+const liquidData = ref([
+  { name: '完成率', value: 65 }
+])
+const liquidRadius = ref(0.4)
 </script>
 
 ## 基础用法
@@ -593,6 +604,220 @@ import { MChartPie } from '@jqkgg/m-ui'
 ```
 </CodeBlock>
 
+## 仪表盘模式
+
+通过 `gauge-mode` 属性可以启用仪表盘模式，显示为半圆形仪表盘，适合展示指标、评分等场景。
+
+### 基础仪表盘
+
+使用 `gauge-mode` 启用仪表盘模式，数据只需传入一个值，组件会自动显示为半圆形仪表盘。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartPie
+      :data="gaugeData"
+      gauge-mode
+      :gauge-min="0"
+      :gauge-max="100"
+      :gauge-color="['#91CC75', '#FAC858', '#EE6666']"
+      progress-label="完成率"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartPie
+    :data="[{ name: '完成率', value: 75 }]"
+    gauge-mode
+    :gauge-min="0"
+    :gauge-max="100"
+    :gauge-color="['#91CC75', '#FAC858', '#EE6666']"
+    progress-label="完成率"
+  />
+</template>
+
+<script setup>
+import { MChartPie } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+### 自定义仪表盘范围
+
+通过 `gauge-min` 和 `gauge-max` 可以自定义仪表盘的数值范围。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartPie
+      :data="[{ name: '温度', value: 25 }]"
+      gauge-mode
+      :gauge-min="0"
+      :gauge-max="50"
+      :gauge-color="['#5470C6', '#91CC75', '#FAC858']"
+      progress-label="温度"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartPie
+    :data="[{ name: '温度', value: 25 }]"
+    gauge-mode
+    :gauge-min="0"
+    :gauge-max="50"
+    :gauge-color="['#5470C6', '#91CC75', '#FAC858']"
+    progress-label="温度"
+  />
+</template>
+
+<script setup>
+import { MChartPie } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+## 水球模式
+
+通过 `liquid-mode` 属性可以启用水球模式，显示为水波动画效果，适合展示完成度、进度等场景。
+
+### 基础水球
+
+使用 `liquid-mode` 启用水球模式，数据只需传入一个值，组件会自动显示为水球效果。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartPie
+      :data="liquidData"
+      liquid-mode
+      :progress-max="100"
+      liquid-color="#3BA3FF"
+      liquid-bg-color="rgba(59, 163, 255, 0.1)"
+      progress-label="完成率"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartPie
+    :data="[{ name: '完成率', value: 65 }]"
+    liquid-mode
+    :progress-max="100"
+    liquid-color="#3BA3FF"
+    liquid-bg-color="rgba(59, 163, 255, 0.1)"
+    progress-label="完成率"
+  />
+</template>
+
+<script setup>
+import { MChartPie } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+### 自定义水球颜色
+
+通过 `liquid-color` 和 `liquid-bg-color` 可以自定义水球的颜色和背景色。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartPie
+      :data="[{ name: '完成率', value: 80 }]"
+      liquid-mode
+      :progress-max="100"
+      liquid-color="#52C41A"
+      liquid-bg-color="rgba(82, 196, 26, 0.1)"
+      progress-label="达成率"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartPie
+    :data="[{ name: '完成率', value: 80 }]"
+    liquid-mode
+    :progress-max="100"
+    liquid-color="#52C41A"
+    liquid-bg-color="rgba(82, 196, 26, 0.1)"
+    progress-label="达成率"
+  />
+</template>
+
+<script setup>
+import { MChartPie } from '@jqkgg/m-ui'
+</script>
+```
+</CodeBlock>
+
+### 自定义水球半径
+
+通过 `liquid-radius` 可以控制水球的大小，值为 0-1 之间的比例，相对于容器大小。
+
+<Demo>
+  <div style="width: 100%; height: 400px;">
+    <MChartPie
+      :data="liquidData"
+      liquid-mode
+      :progress-max="100"
+      :liquid-radius="liquidRadius"
+      liquid-color="#3BA3FF"
+      liquid-bg-color="rgba(59, 163, 255, 0.1)"
+      progress-label="完成率"
+    />
+  </div>
+  <div style="margin-top: 16px;">
+    <label style="display: flex; align-items: center; gap: 12px;">
+      <span>半径大小: {{ (liquidRadius * 100).toFixed(0) }}%</span>
+      <el-slider v-model="liquidRadius" :min="0.2" :max="0.5" :step="0.01" style="flex: 1; max-width: 300px;" />
+    </label>
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <div>
+    <div style="width: 100%; height: 400px;">
+      <MChartPie
+        :data="[{ name: '完成率', value: 65 }]"
+        liquid-mode
+        :progress-max="100"
+        :liquid-radius="liquidRadius"
+        liquid-color="#3BA3FF"
+        liquid-bg-color="rgba(59, 163, 255, 0.1)"
+        progress-label="完成率"
+      />
+    </div>
+    <div style="margin-top: 16px;">
+      <label style="display: flex; align-items: center; gap: 12px;">
+        <span>半径大小: {{ (liquidRadius * 100).toFixed(0) }}%</span>
+        <el-slider v-model="liquidRadius" :min="0.2" :max="0.5" :step="0.01" style="flex: 1; max-width: 300px;" />
+      </label>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { MChartPie } from '@jqkgg/m-ui'
+
+const liquidRadius = ref(0.4)
+</script>
+```
+</CodeBlock>
+
 ## 玫瑰图
 
 通过 `rose-type` 属性可以将饼图转换为玫瑰图。玫瑰图有两种模式：
@@ -965,6 +1190,14 @@ import { MChartPie } from '@jqkgg/m-ui'
 | progressColor | 进度环的渐变色配置，格式为 [起始色, 结束色] | string[] | — | `['#87CEEB', '#4169E1']` |
 | progressBgColor | 进度环未完成部分的颜色 | string | — | `rgba(200, 200, 200, 0.2)` |
 | progressLabel | 进度环中心显示的文案（显示在百分比上方） | string | — | 完成率 |
+| gaugeMode | 是否启用仪表盘模式，启用后显示为半圆形仪表盘 | boolean | — | false |
+| gaugeMin | 仪表盘的最小值 | number | — | 0 |
+| gaugeMax | 仪表盘的最大值 | number | — | 100 |
+| gaugeColor | 仪表盘的分段颜色配置 | string[] | — | `['#91CC75', '#FAC858', '#EE6666']` |
+| liquidMode | 是否启用水球模式，启用后显示为水波动画效果 | boolean | — | false |
+| liquidColor | 水球颜色 | string | — | #3BA3FF |
+| liquidBgColor | 水球背景色 | string | — | `rgba(59, 163, 255, 0.1)` |
+| liquidRadius | 水球半径（相对于容器大小的比例，0-1之间） | number | — | 0.4 |
 | roseType | 玫瑰图类型 | string \| false | radius / area / false | false |
 | options | 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性 | object<br>**注意**：`options` 的类型定义请参考 [ECharts 饼图配置项文档](https://echarts.apache.org/zh/option.html#series-pie.type) | — | undefined |
 

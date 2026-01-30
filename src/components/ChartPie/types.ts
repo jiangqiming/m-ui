@@ -52,6 +52,22 @@ export interface ChartPieProps {
   progressBgColor?: string
   /** 进度环中心显示的文案（显示在百分比上方） */
   progressLabel?: string
+  /** 是否启用仪表盘模式，启用后显示为半圆形仪表盘 */
+  gaugeMode?: boolean
+  /** 仪表盘的最小值 */
+  gaugeMin?: number
+  /** 仪表盘的最大值 */
+  gaugeMax?: number
+  /** 仪表盘的分段颜色配置 */
+  gaugeColor?: string[]
+  /** 是否启用水球模式，启用后显示为水波动画效果 */
+  liquidMode?: boolean
+  /** 水球颜色 */
+  liquidColor?: string
+  /** 水球背景色 */
+  liquidBgColor?: string
+  /** 水球半径（相对于容器大小的比例，0-1之间，默认0.4） */
+  liquidRadius?: number
   /** 玫瑰图类型，'radius' 表示扇形的半径根据数值大小而变化，'area' 表示扇形的面积根据数值大小而变化，false 表示普通饼图 */
   roseType?: ChartPieRoseType
   /** 完全自定义的 ECharts 配置项，传入后将以 options 为准，忽略其他属性。参考：https://echarts.apache.org/zh/option.html#series-pie.type */
