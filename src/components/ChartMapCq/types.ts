@@ -78,5 +78,7 @@ export interface ChartMapCqProps {
   }>
   /** 是否开启鼠标缩放和平移漫游。支持设置为 true / false / 'scale' / 'move'。默认为 false（关闭状态） */
   roam?: boolean | 'scale' | 'move'
+  /** 是否允许点击区县下钻到详细地图。默认为 false（关闭状态） */
+  enableDrillDown?: boolean
 }
 

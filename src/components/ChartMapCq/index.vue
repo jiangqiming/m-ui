@@ -1,13 +1,32 @@
 <template>
   <div
-    ref="chartContainer"
-    :class="['m-chart-map-cq']"
+    :class="['m-chart-map-cq-wrapper']"
     :style="{
       width: computedWidth,
       height: computedHeight,
-      backgroundColor: backgroundColor,
+      position: 'relative',
     }"
-  ></div>
+  >
+    <div
+      ref="chartContainer"
+      :class="['m-chart-map-cq']"
+      :style="{
+        width: '100%',
+        height: '100%',
+        backgroundColor: backgroundColor,
+      }"
+    ></div>
+    <!-- 返回按钮：在区县层级时显示，放在外层避免与 ECharts DOM 冲突 -->
+    <div
+      v-if="props.enableDrillDown && currentLevel === 'district' && currentDistrictName"
+      class="m-chart-map-cq-wrapper__back-button"
+      @click="handleBackToCity"
+      title="返回重庆市地图"
+    >
+      <span class="m-chart-map-cq-wrapper__back-icon">←</span>
+      <span class="m-chart-map-cq-wrapper__back-text">返回重庆市</span>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -74,6 +93,7 @@ const props = withDefaults(defineProps<ChartMapCqProps>(), {
   tooltipFormatter: undefined,
   specialLabels: () => [],
   roam: false,
+  enableDrillDown: false, // 默认关闭下钻功能
 });
 
 const chartContainer = ref<HTMLDivElement | null>(null);
@@ -83,6 +103,12 @@ const defaultGeoJson = ref<any>(null);
 const defaultMainCityGeoJson = ref<any>(null);
 const isLoadingGeoJson = ref(false);
 const isLoadingMainCityGeoJson = ref(false);
+
+// 下钻功能相关状态
+const currentLevel = ref<"city" | "district">("city"); // 当前地图层级：city=市级，district=区县级
+const currentDistrictName = ref<string>(""); // 当前选中的区县名称
+const currentDistrictGeoJson = ref<any>(null); // 当前区县的GeoJSON数据
+const districtAdcodeMap = ref<Map<string, string>>(new Map()); // 区县名称到adcode的映射
 
 // 计算图表实际宽度
 const computedWidth = computed(() => {
@@ -128,6 +154,114 @@ const getColorByValue = (value: number): string => {
 // 处理区域名称（移除主城区后缀）
 const processAreaName = (name: string): string => {
   return name.replace("_main", "");
+};
+
+// 从GeoJSON中提取区县adcode映射
+const extractDistrictAdcodes = (geoJson: any) => {
+  if (!geoJson || !geoJson.features) {
+    console.warn("extractDistrictAdcodes: Invalid geoJson or no features");
+    return;
+  }
+  
+  console.log("Extracting district adcodes from geoJson, features count:", geoJson.features.length);
+  let extractedCount = 0;
+  
+  geoJson.features.forEach((feature: any) => {
+    const properties = feature.properties || {};
+    const name = properties.name || properties.NAME || "";
+    const adcode = properties.adcode || properties.ADCODE || "";
+    
+    if (name && adcode) {
+      districtAdcodeMap.value.set(name, adcode);
+      extractedCount++;
+    }
+  });
+  
+  console.log("Extracted", extractedCount, "district adcodes");
+  console.log("Sample districts:", Array.from(districtAdcodeMap.value.entries()).slice(0, 5));
+};
+
+// 加载区县GeoJSON数据
+const loadDistrictGeoJson = async (adcode: string): Promise<any> => {
+  try {
+    // 从阿里云DataV API加载区县地图数据
+    const response = await fetch(
+      `https://geo.datav.aliyun.com/areas_v3/bound/${adcode}.json`
+    );
+    if (response.ok) {
+      const geoData = await response.json();
+      return geoData;
+    } else {
+      throw new Error(`无法加载区县地图数据: ${adcode}`);
+    }
+  } catch (error) {
+    console.error("ChartMapCq: 加载区县GeoJSON数据失败", error);
+    return null;
+  }
+};
+
+// 处理区县下钻
+const handleDistrictDrillDown = async (districtName: string) => {
+  console.log("handleDistrictDrillDown called with:", districtName);
+  console.log("currentLevel:", currentLevel.value);
+  console.log("districtAdcodeMap size:", districtAdcodeMap.value.size);
+  
+  // 如果已经在区县层级，不处理
+  if (currentLevel.value === "district") {
+    console.log("Already in district level, skipping");
+    return;
+  }
+
+  // 获取区县的adcode
+  const adcode = districtAdcodeMap.value.get(districtName);
+  console.log("Looking for adcode for:", districtName, "found:", adcode);
+  
+  if (!adcode) {
+    console.warn(`未找到区县 ${districtName} 的adcode`);
+    console.log("Available districts:", Array.from(districtAdcodeMap.value.keys()));
+    return;
+  }
+
+  // 加载区县地图数据
+  const districtGeoJson = await loadDistrictGeoJson(adcode);
+  if (!districtGeoJson) {
+    console.warn(`无法加载区县 ${districtName} 的地图数据`);
+    return;
+  }
+
+  // 注册区县地图
+  const districtMapName = `${props.mapName}-${districtName}`;
+  try {
+    echarts.registerMap(districtMapName, districtGeoJson);
+  } catch (e) {
+    console.warn("区县地图注册失败", e);
+  }
+
+  // 更新状态
+  currentLevel.value = "district";
+  currentDistrictName.value = districtName;
+  currentDistrictGeoJson.value = districtGeoJson;
+
+  // 先等待 Vue 完成响应式更新，但延迟返回按钮的渲染
+  // 使用双重 nextTick 确保 DOM 更新完成
+  await nextTick();
+  await nextTick();
+  
+  // 更新图表
+  updateChart();
+};
+
+// 返回市级地图
+const handleBackToCity = async () => {
+  currentLevel.value = "city";
+  currentDistrictName.value = "";
+  currentDistrictGeoJson.value = null;
+  // 使用 nextTick 确保 DOM 更新完成后再更新图表
+  await nextTick();
+  // 使用 requestAnimationFrame 确保在浏览器下一次重绘时更新图表
+  requestAnimationFrame(() => {
+    updateChart();
+  });
 };
 
 // 加载默认GeoJSON数据
@@ -269,6 +403,9 @@ const registerMap = async () => {
     if (props.geoJson) {
       echarts.registerMap(props.mapName, props.geoJson);
       mapRegistered = true;
+      
+      // 提取区县adcode映射
+      extractDistrictAdcodes(props.geoJson);
 
       // 如果显示主城区，也需要注册主城区地图
       if (props.showMainCityInCorner) {
@@ -289,6 +426,9 @@ const registerMap = async () => {
     if (geoData) {
       echarts.registerMap(props.mapName, geoData);
       mapRegistered = true;
+      
+      // 提取区县adcode映射
+      extractDistrictAdcodes(geoData);
 
       // 如果显示主城区，也需要注册主城区地图
       if (props.showMainCityInCorner) {
@@ -341,7 +481,27 @@ const processMapData = (data: ChartMapCqDataItem[]): ChartMapCqDataItem[] => {
 
 // 构建 ECharts 配置
 const buildOption = (): echarts.EChartsOption => {
-  const processedData = processMapData(props.data || []);
+  // 如果是区县层级，使用区县数据；否则使用市级数据
+  const isDistrictLevel = currentLevel.value === "district";
+  const currentMapName = isDistrictLevel 
+    ? `${props.mapName}-${currentDistrictName.value}`
+    : props.mapName;
+  
+  // 区县层级时，筛选当前区县的数据；市级层级时，处理主城区数据
+  let processedData: ChartMapCqDataItem[];
+  if (isDistrictLevel && currentDistrictName.value) {
+    // 区县层级时，只显示该区县的数据，不处理主城区
+    processedData = (props.data || []).filter(
+      (item: ChartMapCqDataItem) => item.name === currentDistrictName.value
+    );
+  } else {
+    // 市级层级时，处理主城区数据
+    processedData = processMapData(props.data || []);
+    // 过滤掉主城区副本数据（如果显示主城区）
+    processedData = processedData.filter(
+      (item: ChartMapCqDataItem) => !item.name.endsWith("_main")
+    );
+  }
 
   // 转换数据格式，应用颜色
   const seriesData = processedData.map((item: ChartMapCqDataItem) => {
@@ -639,14 +799,24 @@ const buildOption = (): echarts.EChartsOption => {
     series: [
       {
         type: "map" as const,
-        map: props.mapName,
+        map: currentMapName,
         // 不使用 geoIndex，直接使用 map，这样 data 中的 itemStyle 才能生效
         roam: props.roam,
         zoom: 1,
         // 使用 layoutCenter 和 layoutSize 控制地图布局（与 width/height 冲突，不能同时使用）
-        layoutCenter: props.showMainCityInCorner ? ["50%", "50%"] : undefined,
-        layoutSize: props.showMainCityInCorner ? "80%" : "100%",
-        data: seriesData.filter((item: any) => !item.name.endsWith("_main")),
+        layoutCenter: isDistrictLevel 
+          ? undefined 
+          : props.showMainCityInCorner 
+          ? ["50%", "50%"] 
+          : undefined,
+        layoutSize: isDistrictLevel 
+          ? "100%" 
+          : props.showMainCityInCorner 
+          ? "80%" 
+          : "100%",
+        data: isDistrictLevel 
+          ? seriesData 
+          : seriesData.filter((item: any) => !item.name.endsWith("_main")),
         itemStyle: {
           areaColor: props.areaStyle?.areaColor || "#5b9bd5",
           borderColor: props.areaStyle?.borderColor || "#fff",
@@ -680,8 +850,8 @@ const buildOption = (): echarts.EChartsOption => {
           fontWeight: (props.labelStyle?.fontWeight as any) || "normal",
         },
       },
-      // 主城区系列
-      ...(props.showMainCityInCorner
+      // 主城区系列（区县层级时不显示）
+      ...(props.showMainCityInCorner && !isDistrictLevel
         ? [
             {
               type: "map" as const,
@@ -758,6 +928,41 @@ const initChart = async () => {
     chartInstance = echarts.init(chartContainer.value);
     const option = buildOption();
     chartInstance.setOption(option);
+    
+    // 绑定点击事件
+    chartInstance.on("click", (params: any) => {
+      console.log("Map clicked:", params);
+      console.log("enableDrillDown:", props.enableDrillDown);
+      console.log("currentLevel:", currentLevel.value);
+      
+      if (params.componentType === "series" && params.seriesType === "map") {
+        const areaName = processAreaName(params.name || "");
+        console.log("Area name:", areaName);
+        
+        // 如果启用了下钻功能，且是市级层级，点击区县时下钻
+        if (props.enableDrillDown && currentLevel.value === "city" && areaName) {
+          // 排除主城区副本（_main后缀），但允许主城区本身下钻
+          if (!areaName.endsWith("_main")) {
+            console.log("Calling handleDistrictDrillDown for:", areaName);
+            handleDistrictDrillDown(areaName);
+          } else {
+            console.log("Skipping _main area");
+          }
+        } else {
+          console.log("Conditions not met for drill down:", {
+            enableDrillDown: props.enableDrillDown,
+            currentLevel: currentLevel.value,
+            areaName: areaName
+          });
+        }
+      }
+    });
+    
+    // 从当前GeoJSON中提取区县adcode映射
+    const currentGeoJson = props.geoJson || defaultGeoJson.value;
+    if (currentGeoJson) {
+      extractDistrictAdcodes(currentGeoJson);
+    }
   } catch (error) {
     console.error("ChartMapCq initialization error:", error);
   }
@@ -769,7 +974,24 @@ const updateChart = () => {
     initChart();
     return;
   }
+  
+  // 确保容器存在
+  if (!chartContainer.value) {
+    console.warn("ChartMapCq: chartContainer is not available");
+    return;
+  }
+  
   try {
+    // 如果是区县层级，需要先注册区县地图
+    if (currentLevel.value === "district" && currentDistrictName.value && currentDistrictGeoJson.value) {
+      const districtMapName = `${props.mapName}-${currentDistrictName.value}`;
+      try {
+        echarts.registerMap(districtMapName, currentDistrictGeoJson.value);
+      } catch (e) {
+        console.warn("区县地图注册失败", e);
+      }
+    }
+    
     const option = buildOption();
     chartInstance.setOption(option, true);
   } catch (error) {
@@ -817,14 +1039,37 @@ watch(
     props.emphasis,
     props.specialLabels,
     props.roam,
+    props.enableDrillDown,
   ],
   async () => {
     // 如果geoJson或showMainCityInCorner变化，需要重新注册地图
     if (props.geoJson !== undefined || props.showMainCityInCorner !== undefined) {
       mapRegistered = false;
       defaultMainCityGeoJson.value = null; // 重置主城区数据
+      
+      // 如果geoJson变化，重置下钻状态
+      if (props.geoJson !== undefined) {
+        if (currentLevel.value === "district") {
+          handleBackToCity();
+        }
+        // 清空adcode映射，重新提取
+        districtAdcodeMap.value.clear();
+      }
+      
       await registerMap();
+      
+      // 重新提取区县adcode映射
+      const currentGeoJson = props.geoJson || defaultGeoJson.value;
+      if (currentGeoJson) {
+        extractDistrictAdcodes(currentGeoJson);
+      }
     }
+    
+    // 如果下钻功能被禁用，且当前在区县层级，返回到市级
+    if (!props.enableDrillDown && currentLevel.value === "district") {
+      handleBackToCity();
+    }
+    
     updateChart();
   },
   { deep: true }
@@ -839,6 +1084,51 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+.m-chart-map-cq-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  
+  &__back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    
+    &:hover {
+      background-color: #fff;
+      border-color: #1890ff;
+      box-shadow: 0 2px 12px rgba(24, 144, 255, 0.3);
+    }
+    
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+  
+  &__back-icon {
+    font-size: 16px;
+    color: #1890ff;
+    font-weight: bold;
+  }
+  
+  &__back-text {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+  }
+}
+
 .m-chart-map-cq {
   width: 100%;
   height: 100%;

@@ -329,6 +329,64 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 ```
 </CodeBlock>
 
+## 区县下钻功能
+
+组件支持点击区县下钻到对应区县的详细地图。通过 `enable-drill-down` 属性可以控制是否启用下钻功能，**默认关闭**。启用后，在市级地图上点击任意区县，会自动加载并显示该区县的详细地图，同时显示返回按钮可以返回到市级地图。
+
+**功能特点**：
+- 自动从阿里云DataV API加载区县地图数据
+- 点击区县自动下钻到区县详细地图
+- 左上角显示返回按钮，可返回市级地图
+- 区县层级时只显示该区县的数据
+- 默认关闭，需要通过 `enable-drill-down` 属性启用
+
+### 启用下钻功能
+
+<Demo>
+  <div style="width: 100%; height: 450px;">
+    <MChartMapCq
+      :data="data1"
+      :height="450"
+      :enable-drill-down="true"
+    />
+  </div>
+</Demo>
+
+<CodeBlock>
+
+```vue
+<template>
+  <MChartMapCq
+    :data="data"
+    :height="450"
+    :enable-drill-down="true"
+  />
+</template>
+
+<script setup>
+import { MChartMapCq } from '@jqkgg/m-ui'
+
+// 通过 enable-drill-down 属性启用下钻功能
+// 点击地图上的区县即可下钻到区县详细地图
+// 在区县地图左上角会显示"返回重庆市"按钮
+</script>
+```
+</CodeBlock>
+
+**使用说明**：
+1. 通过设置 `enable-drill-down="true"` 启用下钻功能（默认关闭）
+2. 在市级地图上，点击任意区县区域即可下钻
+3. 下钻后会自动加载该区县的详细地图数据
+4. 左上角会显示"返回重庆市"按钮，点击可返回市级地图
+5. 区县层级时，主城区地图不会显示
+
+**注意事项**：
+- 下钻功能默认关闭，需要显式设置 `enable-drill-down="true"` 才能使用
+- 区县地图数据从阿里云DataV API动态加载，需要网络连接
+- 如果区县没有对应的地图数据，会在控制台输出警告信息
+- 下钻功能会自动从GeoJSON数据中提取区县的adcode信息
+- 如果在下钻状态下禁用下钻功能，会自动返回到市级地图
+
 ## 特殊标注
 
 通过 `special-labels` 属性可以添加特殊标注区域。
@@ -425,6 +483,11 @@ import { MChartMapCq } from '@jqkgg/m-ui'
 2. 如果本地文件不存在，从完整地图中筛选出主城区数据
 3. 如果筛选失败，从阿里云API加载完整地图后筛选
 
+### 区县地图数据（下钻时自动加载）
+- 当点击区县下钻时，组件会自动从阿里云DataV API加载区县地图数据
+- API地址格式：`https://geo.datav.aliyun.com/areas_v3/bound/{adcode}_full.json`
+- 区县的adcode信息会自动从市级地图的GeoJSON数据中提取
+
 **主城区包括九区**：渝北区、江北区、北碚区、沙坪坝区、渝中区、南岸区、九龙坡区、大渡口区、巴南区
 
 **注意**：两江新区在阿里云地图数据中可能不存在，因此使用渝北区和江北区替代。
@@ -500,6 +563,7 @@ import chongqingGeoJson from '../../src/assets/geo/chongqing.json'
 | tooltipFormatter | 提示框格式化函数 | (params: any) => string | — | `undefined` |
 | specialLabels | 特殊标注区域配置 | [SpecialLabel[]](#SpecialLabel) | — | `[]` |
 | roam | 是否开启鼠标缩放和平移漫游 | boolean \| 'scale' \| 'move' | true / false / 'scale' / 'move' | `false` |
+| enableDrillDown | 是否允许点击区县下钻到详细地图 | boolean | — | `false` |
 
 ### ChartMapCqDataItem {#ChartMapCqDataItem}
 
@@ -563,4 +627,6 @@ import chongqingGeoJson from '../../src/assets/geo/chongqing.json'
 3. **主城区配置**：默认主城区包括9个区域（渝北区、江北区、北碚区、沙坪坝区、渝中区、南岸区、九龙坡区、大渡口区、巴南区），可以通过 `mainCityNames` 属性自定义。注意：两江新区在阿里云地图数据中可能不存在，因此使用渝北区和江北区替代。
 
 4. **颜色映射**：默认使用序时进度的5级颜色映射，可以通过 `ranges` 属性自定义颜色范围。
+
+5. **区县下钻**：组件支持点击区县下钻到详细地图，但默认关闭。需要通过 `enable-drill-down` 属性设置为 `true` 来启用。下钻功能会自动从GeoJSON数据中提取区县的adcode信息，并从阿里云DataV API加载区县地图数据。如果某个区县没有对应的地图数据，会在控制台输出警告信息。如果在下钻状态下禁用下钻功能，会自动返回到市级地图。
 
