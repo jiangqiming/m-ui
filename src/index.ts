@@ -17,13 +17,14 @@ import MChartRadar from './components/ChartRadar/index.vue'
 import MChartTree from './components/ChartTree/index.vue'
 import MChartSunburst from './components/ChartSunburst/index.vue'
 import MChartKLine from './components/ChartKLine/index.vue'
+import MChartPictorialBar from './components/ChartPictorialBar/index.vue'
 import MResponsivePage from './components/ResponsivePage/index.vue'
 import MScrollBox from './components/ScrollBox/index.vue'
 import MEllipsisText from './components/EllipsisText/index.vue'
 import MGradationText from './components/GradationText/index.vue'
 
 // 导出组件
-export { MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MChartWordCloud, MChartGraph, MChartRadar, MChartTree, MChartSunburst, MChartKLine, MResponsivePage, MScrollBox, MEllipsisText, MGradationText }
+export { MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MChartWordCloud, MChartGraph, MChartRadar, MChartTree, MChartSunburst, MChartKLine, MChartPictorialBar, MResponsivePage, MScrollBox, MEllipsisText, MGradationText }
 
 // 导出类型
 export type { ButtonProps } from './components/Button/types'
@@ -41,13 +42,14 @@ export type { ChartRadarProps, ChartRadarSeries } from './components/ChartRadar/
 export type { ChartTreeProps, ChartTreeNode, ChartTreeLayout, ChartTreeOrient } from './components/ChartTree/types'
 export type { ChartSunburstProps, ChartSunburstNode } from './components/ChartSunburst/types'
 export type { ChartKLineProps, ChartKLineDataItem } from './components/ChartKLine/types'
+export type { ChartPictorialBarProps, ChartPictorialBarSeries } from './components/ChartPictorialBar/types'
 export type { ResponsivePageProps, ResponsiveBreakpoint, ResponsiveBreakpoints } from './components/ResponsivePage/types'
 export type { ScrollBoxProps } from './components/ScrollBox/types'
 export type { EllipsisTextProps, EllipsisTextTag, EllipsisTextPlacement, EllipsisTextTruncateFrom } from './components/EllipsisText/types'
 export type { GradationTextProps, GradationTextDirection } from './components/GradationText/types'
 
 // 组件列表
-const components = [MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MChartWordCloud, MChartGraph, MChartRadar, MChartTree, MChartSunburst, MChartKLine, MResponsivePage, MScrollBox, MEllipsisText, MGradationText]
+const components = [MButton, MInput, MChartBar, MChartBar3D, MChartPie, MChartPie3D, MChartLine, MChartMapCq, MChartMapCq3D, MChartWordCloud, MChartGraph, MChartRadar, MChartTree, MChartSunburst, MChartKLine, MChartPictorialBar, MResponsivePage, MScrollBox, MEllipsisText, MGradationText]
 
 // 安装函数
 const install = (app: App) => {
@@ -75,6 +77,7 @@ export default {
   MChartTree,
   MChartSunburst,
   MChartKLine,
+  MChartPictorialBar,
   MResponsivePage,
   MScrollBox,
   MEllipsisText,
