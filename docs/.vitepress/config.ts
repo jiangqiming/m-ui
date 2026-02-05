@@ -80,6 +80,7 @@ export default defineConfig({
             { text: 'ChartMapCq3D 重庆3D地图', link: '/components/mapcq3d' },
             { text: 'ChartWordCloud 词云图', link: '/components/wordcloud' },
             { text: 'ChartGraph 关系图', link: '/components/graph' },
+            { text: 'ChartRadar 雷达图', link: '/components/radar' },
           ]
         }
       ]
